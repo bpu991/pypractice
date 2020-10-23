@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import UserList from './components/UsersList';
 import PythonTerminal from './components/PythonTerminal';
 import SignIn from './components/SignIn'
+import SignUp from './components/SignUp'
 
 
 function App() {
@@ -23,6 +24,9 @@ function App() {
         <Switch>
             <Route exact path="/signin">
                 <SignIn />
+            </Route>
+            <Route exact path="/signup">
+                <SignUp />
             </Route>
 
             <Route path="/users">
