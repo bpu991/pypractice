@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 
 import UserList from './components/UsersList';
+import PythonTerminal from './components/PythonTerminal'
 
 
 function App() {
@@ -17,6 +18,10 @@ function App() {
         <Switch>
             <Route path="/users">
                 <UserList />
+            </Route>
+
+            <Route path="/testing">
+                <PythonTerminal/>
             </Route>
 
             <Route path="/">
