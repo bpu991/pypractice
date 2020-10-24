@@ -7,6 +7,7 @@ import UserList from './components/UsersList';
 import PythonTerminal from './components/PythonTerminal';
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
+import NavBar from './components/NavBar'
 
 
 function App() {
@@ -15,12 +16,7 @@ function App() {
      <>
     <CssBaseline />
     <BrowserRouter>
-        <nav>
-            <ul>
-                <li><NavLink to="/" activeclass="active">Home</NavLink></li>
-                <li><NavLink to="/users" activeclass="active">Users</NavLink></li>
-            </ul>
-        </nav>
+        <NavBar/>
         <Switch>
             <Route exact path="/signin">
                 <SignIn />
