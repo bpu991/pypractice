@@ -7,6 +7,7 @@ This is the backend for the Flask React project.
 1. Clone this repository
 
 2. Install dependencies
+
    ```bash
    pipenv install --dev -r dev-requirements.txt --python=python3 && pipenv install -r requirements.txt
    ```
@@ -24,24 +25,24 @@ This is the backend for the Flask React project.
    ```bash
    python -m database && flask run
    ```
+
 6. To run the React App in development, checkout the [README](./client/README.md) inside the client directory.
 
+---
 
+_IMPORTANT!_
+If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
+You can do this by running:
 
+```bash
+pipenv lock -r > requirements.txt
+```
 
-***
-*IMPORTANT!*
-   If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
-   You can do this by running:
-   ```bash
-   pipenv lock -r > requirements.txt
-   ```
+_ALSO IMPORTANT!_
+psycopg2-binary MUST remain a dev dependency because you can't install it on apline-linux.
+There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
 
-*ALSO IMPORTANT!*
-   psycopg2-binary MUST remain a dev dependency because you can't install it on apline-linux.
-   There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
-***
-
+---
 
 ## Deploy to Heroku
 
