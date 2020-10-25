@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-// @material-ui/core
-// import { makeStyles } from "@material-ui/core/styles";
 
 import "./PythonTerminal.css";
 
