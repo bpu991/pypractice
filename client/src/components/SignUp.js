@@ -1,12 +1,22 @@
 import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom';
+
+import {makeStyles} from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import Link from '@material-ui/core/Link'
-import { NavLink } from 'react-router-dom';
+
+
+const useStyles = makeStyles(theme => ({
+    space: {
+        marginTop: 100
+    }
+}))
 
 const SignUp = () => {
+    const classes= useStyles();
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,7 +27,7 @@ const SignUp = () => {
     const updateUsername = e => setUsername(e.target.value);
     return (
         <Container component="main" maxWidth="xs">
-        <div>
+        <div className={classes.space}>
             <Typography variant="h5">Sign up</Typography>
             <form>
             <TextField

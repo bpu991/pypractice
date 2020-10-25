@@ -1,20 +1,30 @@
 import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom';
+
+import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import Link from '@material-ui/core/Link'
-import { NavLink } from 'react-router-dom';
+
+const useStyles = makeStyles(theme => ({
+    space: {
+        marginTop: 100
+    }
+}))
 
 const SignIn = () => {
+    const classes = useStyles();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const updateEmail = e => setEmail(e.target.value);
     const updatePassword = e => setPassword(e.target.value);
+
     return (
-        <Container component="main" maxWidth="xs">
-        <div>
+        <Container  component="main" maxWidth="xs">
+        <div className={classes.space}>
             <Typography variant="h5">Sign in</Typography>
             <form>
                 <TextField

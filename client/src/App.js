@@ -1,26 +1,34 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import UserList from './components/UsersList';
 import PythonTerminal from './components/PythonTerminal';
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
+import NavBar from './components/NavBar'
+import LandingOrDashboard from './components/LandingOrDashboard'
+import Footer from './components/Footer'
+import Problems from './components/Problems';
 
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      minHeight: '93vh',
+    },
+}))
 
 function App() {
+    const theme = createMuiTheme();
+    const classes = useStyles();
 
   return (
-     <>
+    <ThemeProvider theme={theme}>
     <CssBaseline />
     <BrowserRouter>
-        <nav>
-            <ul>
-                <li><NavLink to="/" activeclass="active">Home</NavLink></li>
-                <li><NavLink to="/users" activeclass="active">Users</NavLink></li>
-            </ul>
-        </nav>
+    <div className={classes.root}>
+        <NavBar/>
         <Switch>
             <Route exact path="/signin">
                 <SignIn />
@@ -29,21 +37,23 @@ function App() {
                 <SignUp />
             </Route>
 
-            <Route path="/users">
-                <UserList />
-            </Route>
-
             <Route path="/testing">
                 <PythonTerminal/>
             </Route>
 
+            <Route path="/problems">
+                <Problems/>
+            </Route>
 
-            <Route path="/">
-                <h1>My Home Page</h1>
+
+            <Route exact path="/">
+                <LandingOrDashboard/>
             </Route>
         </Switch>
+    </div>
+    <Footer />
     </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 }
 
