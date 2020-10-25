@@ -13,7 +13,7 @@ export default function PythonTerminal() {
     const script2 = document.createElement("script");
     script2.innerText = `
 var code = acer.getValue();
-console.log(code); 
+console.log(code);
 var py = pyodide.runPython;
 console.log(py("2+2"));
 
@@ -24,7 +24,7 @@ display.innerHTML = a;
 
 var b = py(code);
 display.innerHTML = b;
-    
+
     `;
     document.body.append(script2);
 
@@ -50,6 +50,7 @@ display.innerHTML = b;
         starBit('xyz,-abc*123') → -abc* starBit('x,-hello*') → -hello*
         starBit(',-xy*1') → -xy*
       </p>
+      <div id="editor" style={{padding:'5%'}}></div>
       <p>Result:</p>
       <div id='display'></div>
       <button onClick={handleClick}>Click</button>

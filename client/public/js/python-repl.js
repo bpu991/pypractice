@@ -1,7 +1,9 @@
 //create host element
 const aceEditor = document.createElement("div");
 //append to body
-document.body.append(aceEditor);
+// document.body.append(aceEditor);
+const parent = document.getElementById('editor');
+parent.appendChild(aceEditor);
 //initialize code editor in element
 const acer = window.ace.edit(aceEditor, {
   mode: "ace/mode/python",
