@@ -1,31 +1,49 @@
-import React, { useEffect, useState } from "react";
-import AceEditor from "react-ace";
-
-import "ace-builds/src-noconflict/mode-python"
-import "ace-builds/src-noconflict/theme-tomorrow_night_blue"
+import React, { useEffect } from "react";
 
 import "./PythonTerminal.css";
 
-export default function PythonTerminal({
-  problemId,
-}) {
-  const [userCode, setUserCode] = useState('')
-  const updateUserCode = value => setUserCode(value)
-
+export default function PythonTerminal() {
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "/js/python-repl.js";
     document.body.append(script);
   });
 
+  // function handleClick() {
+  //   const script2 = document.createElement("script");
+  //   script2.innerText = `
+  //     var code = acer.getValue();
+  //     console.log(code);
+  //     var py = pyodide.runPython;
+  //     console.log(py("2+2"));
+
+  //     var a = py("'Hello Py'");
+
+  //     var display = document.querySelector("#display");
+  //     display.innerHTML = a;
+
+  //     var b = py(code);
+  //     display.innerHTML = b;
+
+  //   `;
+  //   document.body.append(script2);
+
+  //   return () => document.body.remove(script2);
+  // }
 
   function handleClick() {
+      var code = window.acer.getValue();
+      console.log(code);
       var py = window.pyodide.runPython;
-      var evaluatedCode = py(userCode);
+      console.log(py("2+2"));
+
+      var a = py("'Hello Py'");
 
       var display = document.querySelector("#display");
-      display.innerHTML = evaluatedCode;
+      display.innerHTML = a;
 
+      var b = py(code);
+      display.innerHTML = b;
   }
 
   return (
@@ -47,23 +65,7 @@ export default function PythonTerminal({
         starBit('xyz,-abc*123') → -abc* starBit('x,-hello*') → -hello*
         starBit(',-xy*1') → -xy*
       </p>
-      {/* <div id="editor" style={{padding:'5%'}}></div> */}
-      <AceEditor
-        maxLines="Infinity"
-        theme="tomorrow_night_blue"
-        fontSize="100%"
-        showPrintMargin="true"
-        minLines="20"
-        mode="python"
-        selectionStyle="text"
-        autoScrollEditorIntoView="true"
-        animatedScroll="true"
-        onChange={updateUserCode}
-        setOptions={{
-          enableBasicAutocompletion: true,
-          enableLiveAutocompletion: true,
-        }}
-      />
+      <div id="editor" style={{padding:'5%'}}></div>
       <p>Result:</p>
       <div id='display'></div>
       <button onClick={handleClick}>Click</button>
