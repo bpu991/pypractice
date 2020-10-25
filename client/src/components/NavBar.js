@@ -1,24 +1,32 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar'
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton'
+
+import SvgLogo from './SvgLogo'
 
 const NavBar = () => {
     const loggedOut = useSelector(state => !state.authentication.id);
     const history = useHistory();
+    const location = useLocation();
+    const pos = (location.pathname==='/' && loggedOut) ? "absolute" : "static"
 
-
-    const handleSignout= () => {
+    const handleSignout = () => {
         // need to handle signing out
         // dispatch(signout());
         history.push('/')
     }
     return (
-        <AppBar color='transparent' position="static" elevation={0}>
+        <AppBar color='transparent' position={pos} elevation={0}>
             <Toolbar>
-                <Button component={NavLink} to='/'>Home</Button>
+                <IconButton component={NavLink} to="/">
+                    <SvgLogo/>
+                </IconButton>
+                <div style={{flexGrow:1}}/>
+                <Button component={NavLink} to='/problems'>Practice</Button>
                 {(!loggedOut) ? (
                     <Button onClick={handleSignout}>Sign Out</Button>
                 ) : (
