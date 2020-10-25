@@ -34,17 +34,16 @@ const useStyles = makeStyles((theme) => ({
     },
     img1: {
         backgroundImage: `url(${splashEndOne})`,
-        // backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         height: 250,
         width: 250,
         borderRadius: '50%',
+        margin:'0 auto',
     },
 
     img2: {
         backgroundImage: `url(${splashEndTwo})`,
-        // backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         height: 250,
@@ -127,8 +126,8 @@ const LandingPage = () => {
                 <Divider variant="middle" style={{marginBottom: "50px"}}/>
                 <Grid container direction="column" align="center">
                     <Typography variant="h5" gutterBottom>
-                            What are you waiting for?
-                        </Typography>
+                        What are you waiting for?
+                    </Typography>
                     <Button component={NavLink} to="/problems" size="large" variant="outlined" color="primary">Start Coding</Button>
                 </Grid>
             </Container>
