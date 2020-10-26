@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core';
@@ -8,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import Link from '@material-ui/core/Link'
 
+import { login } from '../actions/auth_actions'
+
 const useStyles = makeStyles(theme => ({
     space: {
         marginTop: 100
@@ -16,17 +19,23 @@ const useStyles = makeStyles(theme => ({
 
 const SignIn = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const updateEmail = e => setEmail(e.target.value);
     const updatePassword = e => setPassword(e.target.value);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(login(email, password));
+    }
+
     return (
         <Container  component="main" maxWidth="xs">
         <div className={classes.space}>
             <Typography variant="h5">Sign in</Typography>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <TextField
                     variant="outlined"
                     margin="normal"
