@@ -11,7 +11,6 @@ import NavBar from './components/NavBar'
 import LandingOrDashboard from './components/LandingOrDashboard'
 import Footer from './components/Footer'
 import Problems from './components/Problems';
-import UserProfile from './components/UserProfile';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,9 +49,6 @@ function App() {
                 <LandingOrDashboard/>
             </Route>
 
-            <Route path="/users/:userId">
-                <UserProfile />
-            </Route>
         </Switch>
     </div>
     <Footer />
