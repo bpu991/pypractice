@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom';
 
 import {makeStyles} from '@material-ui/styles';
@@ -7,6 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import Link from '@material-ui/core/Link'
+
+import {signup} from '../actions/auth_actions';
 
 
 const useStyles = makeStyles(theme => ({
@@ -17,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 const SignUp = () => {
     const classes= useStyles();
+    const dispatch = useDispatch();
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,11 +29,18 @@ const SignUp = () => {
     const updateEmail = e => setEmail(e.target.value);
     const updatePassword = e => setPassword(e.target.value);
     const updateUsername = e => setUsername(e.target.value);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(signup(username, email, password));
+    }
+
+
     return (
         <Container component="main" maxWidth="xs">
         <div className={classes.space}>
             <Typography variant="h5">Sign up</Typography>
-            <form>
+            <form onSubmit={handleSubmit}>
             <TextField
                     variant="outlined"
                     margin="normal"
