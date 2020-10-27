@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from app.models import User, Attempt
+from app.models import db, User, Attempt
 
 user_routes = Blueprint('users', __name__)
 
@@ -8,6 +8,12 @@ def index():
   response = User.query.all()
   return { "users": [user.to_dict() for user in response]}
 
+@user_routes.route('/<user_param>')
+def get_single_user(user_param):
+  user_id = int(user_param)
+  response = User.query.filter(user_id == User.id).all()
+  return {"user": [user.to_dict() for user in response]}
+  
 @user_routes.route('/<user_param>/attempts') #Route for getting all of a user's attempts on every problem
 def all_user_attempts(user_param):
   user_id = int(user_param)
@@ -23,13 +29,17 @@ def get_attempt(user_param, problem_param):
 
   return {'attempts': attempt.to_dict()}
 
-@user_routes.route('/<user_param>/attempts/<problem_param>', methods=["POST"])
+@user_routes.route('/<user_param>/attempts/<problem_param>', methods=["POST"]) #Route for adding new attempts to the db
 def post_attempt(user_param, problem_param):
   user_id = int(user_param)
   problem_id = int(problem_param)
 
-  attempt = Attempt.query.filter(user_id == Attempt.user_id and problem_id == Attempt.problem_id).one_or_none()
+  data = request.json
   
-  # if attempt: # if there is an attempt, update existing attempt with the new attempt
+  attempt = Attempt(user_id=user_id, problem_id=problem_id, **data)
+  
+  db.session.add(attempt)
+  db.session.commit()
 
-  # else: # if there is no attempt, make one
+  return attempt.to_dict()
+
