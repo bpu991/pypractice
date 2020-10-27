@@ -1,5 +1,6 @@
-import React from 'react';
-import {useHistory} from 'react-router-dom'
+import React, {useEffect} from 'react';
+import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,6 +12,8 @@ import Paper from '@material-ui/core/Paper';
 import CheckCircle from '@material-ui/icons/CheckCircle'
 import Container from '@material-ui/core/Container'
 import { green } from '@material-ui/core/colors';
+
+import { loadProblemsThunk } from '../actions/problems';
 
 const tempProblems = [{
     id: 1,
@@ -45,11 +48,18 @@ const tempProblems = [{
 }]
 const Problems = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const difficulties = {
         "1": "Easy",
         "2": "Intermediate",
         "3": "Difficult"
     }
+
+    const problems = useSelector(state=>state.entities.problems.byId)
+
+    useEffect(()=> {
+        dispatch(loadProblemsThunk())
+    }, [])
 
     const goToProblem = (id) => {
         history.push(`/problems/${id}`)

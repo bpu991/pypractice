@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {useSelector, useDispatch } from 'react-redux'
 import { useParams, NavLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
@@ -9,7 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import NavigateNext from '@material-ui/icons/NavigateNext';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@material-ui/core/IconButton';
+
+import { loadProblemsThunk, loadProblemDetailsThunk } from '../actions/problems';
 
 const tempActiveProblem = {
     id: 3,
@@ -44,7 +47,16 @@ const tempProblems = [{
 
 const ProblemPage = () => {
     const { problemId } = useParams();
+    const dispatch = useDispatch()
     const [listOpen, setListOpen] = useState(false)
+
+    const problems = useSelector(state => state.entities.problems.byId);
+    const activeProblem = useSelector(state => state.entities.problems.activeProblem)
+
+    useEffect(() => {
+        dispatch(loadProblemsThunk())
+        dispatch(loadProblemDetailsThunk(problemId))
+    }, [problemId])
 
 
     // get the active problem from state
