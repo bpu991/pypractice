@@ -13,7 +13,9 @@ class User(db.Model, UserMixin):
   email = db.Column(db.String(255), nullable = False, unique = True)
   hashed_password = db.Column(db.String(128), nullable = False)
 
+
   attempts = db.relationship("Attempt", back_populates="user")
+
 
   def to_dict(self):
     return {
