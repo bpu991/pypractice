@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom'
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -43,10 +44,15 @@ const tempProblems = [{
     solved: false, // this may be in a different part of state
 }]
 const Problems = () => {
+    const history = useHistory();
     const difficulties = {
         "1": "Easy",
         "2": "Intermediate",
         "3": "Difficult"
+    }
+
+    const goToProblem = (id) => {
+        history.push(`/problems/${id}`)
     }
 
     return (
@@ -62,7 +68,7 @@ const Problems = () => {
                     <Table>
                         <TableBody>
                             {tempProblems.map((problem, ind) => (
-                                <TableRow key={problem.id} hover>
+                                <TableRow key={problem.id} hover onClick={() => goToProblem(problem.id)}>
                                     <TableCell padding="none">{ind + 1}</TableCell>
                                     <TableCell>{problem.title}</TableCell>
                                     <TableCell>{difficulties[problem.difficulty]}</TableCell>

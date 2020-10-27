@@ -11,6 +11,7 @@ import NavBar from './components/NavBar'
 import LandingOrDashboard from './components/LandingOrDashboard'
 import Footer from './components/Footer'
 import Problems from './components/Problems';
+import ProblemPage from './components/ProblemPage'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,8 +41,12 @@ function App() {
                 <PythonTerminal/>
             </Route>
 
-            <Route path="/problems">
+            <Route exact path="/problems">
                 <Problems/>
+            </Route>
+
+            <Route exact path="/problems/:problemId">
+                <ProblemPage/>
             </Route>
 
 
