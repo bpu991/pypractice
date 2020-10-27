@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { SET_USER, REMOVE_USER } from "../actions/auth_actions";
+import { userConstants } from "../constants/user_constants";
 
 function loadUser() {
   const authToken = Cookies.get("token");
@@ -17,15 +17,23 @@ function loadUser() {
   return {};
 }
 
-const authReducer = (state = loadUser(), action) => {
+export function authentication(state = loadUser(), action) {
   switch (action.type) {
-    case SET_USER:
-      return action.user;
-    case REMOVE_USER:
+    case userConstants.LOGIN_REQUEST:
+      return {
+        loggingIn: true,
+        user: action.user,
+      };
+    case userConstants.LOGIN_SUCCESS:
+      return {
+        loggedIn: true,
+        user: action.user,
+      };
+    case userConstants.LOGIN_FAILURE:
+      return {};
+    case userConstants.LOGOUT:
       return {};
     default:
       return state;
   }
-};
-
-export default authReducer;
+}
