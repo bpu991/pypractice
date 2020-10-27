@@ -75,7 +75,7 @@ class Problem(db.Model):
         "id": self.id,
         "title": self.title,
         "instructions": self.instructions,
-        "default content": self.default_content,
+        "default_content": self.default_content,
         "solution": self.solution,
         "test": self.tests,
         "difficulty": self.difficulty

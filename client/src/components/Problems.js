@@ -55,7 +55,7 @@ const Problems = () => {
         "3": "Difficult"
     }
 
-    const problems = useSelector(state=>state.entities.problems.byId)
+    const problems = useSelector(state=>Object.values(state.entities.problems.byId))
 
     useEffect(()=> {
         dispatch(loadProblemsThunk())
