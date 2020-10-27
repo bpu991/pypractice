@@ -13,7 +13,9 @@ class User(db.Model, UserMixin):
   email = db.Column(db.String(255), nullable = False, unique = True)
   hashed_password = db.Column(db.String(128), nullable = False)
 
+
   attempts = db.relationship("Attempt", back_populates="user")
+
 
   def to_dict(self):
     return {
@@ -46,6 +48,14 @@ class Attempt(db.Model):
   user = db.relationship("User", back_populates="attempts")
   problem = db.relationship("Problem", back_populates="attempts")
 
+  def to_dict(self):
+    return {
+        "id": self.id,
+        "user_id": self.user_id,
+        "problem_id": self.problem_id,
+        "saved_code": self.saved_code,
+        "solved": self.solved,
+    }
 
 class Problem(db.Model):
   __tablename__ = 'problems'
@@ -59,3 +69,14 @@ class Problem(db.Model):
   difficulty = db.Column(db.Integer, nullable = False)
 
   attempts = db.relationship("Attempt", back_populates="problem")
+
+  def to_dict(self):
+    return {
+        "id": self.id,
+        "title": self.title,
+        "instructions": self.instructions,
+        "default content": self.default_content,
+        "solution": self.solution,
+        "test": self.tests,
+        "difficulty": self.difficulty
+    }
