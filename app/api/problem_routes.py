@@ -1,17 +1,16 @@
 from flask import Blueprint, jsonify, request
-from app.models import User, Problem
+from app.models import User, Problem, Test
+from sqlalchemy.orm import joinedload, load_only
 
 problem_routes = Blueprint('problems', __name__)
 
-@problem_routes.route('/') #Route for getting all problems
+@problem_routes.route('/') #Route for getting (only) id, title, & difficulty of all problems
 def index():
-    problems = Problem.query.all()
-    return {"problems": [problem.to_dict() for problem in problems]}
+    problems = Problem.query.with_entities(Problem.id, Problem.title, Problem.difficulty).all()
+    return {"problems": [{'id': problem[0], 'title': problem[1], 'difficulty': problem[2]} for problem in problems]}
 
 @problem_routes.route('/<problem_param>') #Route for getting a single problem
 def get_single_problem(problem_param):
     problem_id = int(problem_param)
-    
-    response = Problem.query.filter(problem_id == Problem.id).all()
-
-    return {"problem": [problem.to_dict() for problem in response]}
+    response = Problem.query.get(problem_id)
+    return response.to_dict()
