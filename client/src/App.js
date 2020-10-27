@@ -12,7 +12,6 @@ import LandingOrDashboard from './components/LandingOrDashboard'
 import Footer from './components/Footer'
 import Problems from './components/Problems';
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
       minHeight: '93vh',
@@ -49,6 +48,7 @@ function App() {
             <Route exact path="/">
                 <LandingOrDashboard/>
             </Route>
+
         </Switch>
     </div>
     <Footer />
