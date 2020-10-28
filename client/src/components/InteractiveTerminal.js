@@ -40,11 +40,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InteractiveTerminal = ({
-    defaultContent,
-    activeProblem,
-    user
-}) => {
+const InteractiveTerminal = () => {
+    const defaultContent = useSelector((state) => state.entities.problems.activeProblem.default_content)
+    const activeProblem = useSelector((state) => state.entities.problems.activeProblem);
+    const user = useSelector((state) => state.authentication.user);
     const classes = useStyles();
     const [userCode, setUserCode] = useState("");
     const [evalResult, setEvalResult] = useState("");
@@ -184,12 +183,5 @@ const InteractiveTerminal = ({
   );
 };
 
-const InteractiveTerminalContainer = () => {
-    const defaultContent = useSelector((state) => state.entities.problems.activeProblem.default_content)
-    const activeProblem = useSelector((state) => state.entities.problems.activeProblem);
-    const user = useSelector((state) => state.authentication.user);
 
-    return <InteractiveTerminal defaultContent={defaultContent} activeProblem={activeProblem} user={user} />
-}
-
-export default InteractiveTerminalContainer;
+export default InteractiveTerminal;
