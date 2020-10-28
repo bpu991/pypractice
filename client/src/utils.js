@@ -39,25 +39,24 @@ result
   }
 }
 
-export function stdWrapper(code) {
-  return `
+
+export function stdIOWrapper(code) {
+  code = code.split('\n')
+  for(let i = 1; i < code.length; i++) {
+    code[i] = code[i] === '' ? '' : '  ' + code[i]
+  }
+  code = code.join('\n')
+  code = `
+import sys, io
+sys.stdout = io.StringIO()
 sys.stdout.__init__()
 
-${code}
+try:
+  ${code}
+except:
+  print(sys.exc_info())
 
 sys.stdout.getvalue()
-`
-}
-
-export function ioInit(py) {
-  py(`
-import io, code, sys
-from js import pyodide
-
-class Console(code.InteractiveConsole):
-    def runcode(self, code):
-        sys.stdout = io.StringIO()
-        sys.stderr = io.StringIO()
-_c = Console(locals=globals())`
-  )
+  `
+  return code
 }
