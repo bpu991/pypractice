@@ -55,8 +55,8 @@ const ProblemPage = () => {
     const activeProblem = useSelector(state => state.entities.problems.activeProblem)
 
     useEffect(() => {
-        dispatch(loadProblemsThunk())
-        dispatch(loadProblemDetailsThunk(problemId))
+        // dispatch(loadProblemsThunk())
+        // dispatch(loadProblemDetailsThunk(problemId))
     }, [problemId])
 
 

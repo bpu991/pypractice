@@ -58,7 +58,8 @@ const Problems = () => {
     const problems = useSelector(state=>Object.values(state.entities.problems.byId))
 
     useEffect(()=> {
-        dispatch(loadProblemsThunk())
+        // load problems once that is present
+        // dispatch(loadProblemsThunk())
     }, [])
 
     const goToProblem = (id) => {

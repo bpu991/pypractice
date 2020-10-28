@@ -9,16 +9,6 @@ import {
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-<<<<<<< HEAD
-import PythonTerminal from './components/PythonTerminal';
-import SignIn from './components/SignIn'
-import SignUp from './components/SignUp'
-import NavBar from './components/NavBar'
-import LandingOrDashboard from './components/LandingOrDashboard'
-import Footer from './components/Footer'
-import Problems from './components/Problems';
-import ProblemPage from './components/ProblemPage'
-=======
 import PythonTerminal from "./components/PythonTerminal";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
@@ -26,11 +16,10 @@ import NavBar from "./components/NavBar";
 import LandingOrDashboard from "./components/LandingOrDashboard";
 import Footer from "./components/Footer";
 import Problems from "./components/Problems";
+import ProblemPage from "./components/ProblemPage"
 
-import { PrivateRoute } from "./components/PrivateRoute";
 import { AuthRoute } from "./components/AuthRoute";
 import { restoreCSRF } from "./actions/csrf_actions";
->>>>>>> master
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,7 +54,6 @@ function App() {
               <PythonTerminal />
             </Route>
 
-<<<<<<< HEAD
             <Route exact path="/problems">
                 <Problems/>
             </Route>
@@ -77,15 +65,7 @@ function App() {
 
             <Route exact path="/">
                 <LandingOrDashboard/>
-=======
-            <Route path='/problems'>
-              <Problems />
->>>>>>> master
             </Route>
-
-            <PrivateRoute exact path='/'>
-              <LandingOrDashboard />
-            </PrivateRoute>
           </Switch>
         </div>
         <Footer />
