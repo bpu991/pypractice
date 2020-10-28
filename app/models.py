@@ -30,8 +30,14 @@ class User(db.Model, UserMixin):
     def password(self, password):
         self.hashed_password = generate_password_hash(password)
 
-    def check_password(self, password):
-        return check_password_hash(self.password, password)
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "attempts": [attempt.to_dict() for attempt in self.attempts] if
+            self.attempts else None
+        }
 
     @classmethod
     def authenticate(cls, email, password):
@@ -58,7 +64,7 @@ class Attempt(db.Model):
             "user_id": self.user_id,
             "problem_id": self.problem_id,
             "saved_code": self.saved_code,
-            "solved": self.solved,
+            "solved": self.solved
         }
 
 
@@ -70,10 +76,10 @@ class Problem(db.Model):
     instructions = db.Column(db.String, nullable=False)
     default_content = db.Column(db.String, nullable=False)
     solution = db.Column(db.String, nullable=False)
-    tests = db.Column(db.String, nullable=False)
     difficulty = db.Column(db.Integer, nullable=False)
 
     attempts = db.relationship("Attempt", back_populates="problem")
+    tests = db.relationship("Test", back_populates="problem")
 
     def to_dict(self):
         return {
@@ -82,6 +88,29 @@ class Problem(db.Model):
             "instructions": self.instructions,
             "default content": self.default_content,
             "solution": self.solution,
-            "test": self.tests,
-            "difficulty": self.difficulty
+            "difficulty": self.difficulty,
+            "attempts": [attempt.to_dict() for attempt in self.attempts] if
+            self.attempts else None,
+            "tests": [test.to_dict() for test in self.tests] if self.tests
+            else None,
+        }
+
+
+class Test(db.Model):
+    __tablename__ = 'tests'
+
+    id = db.Column(db.Integer, primary_key=True)
+    problem_id = db.Column(db.Integer, db.ForeignKey(
+        "problems.id"), nullable=False)
+    call = db.Column(db.String, nullable=False)
+    expected = db.Column(db.String, nullable=False)
+
+    problem = db.relationship("Problem", back_populates="tests")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "problem_id": self.problem_id,
+            "call": self.call,
+            "expected": self.expected
         }
