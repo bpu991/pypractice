@@ -16,8 +16,8 @@ import NavBar from "./components/NavBar";
 import LandingOrDashboard from "./components/LandingOrDashboard";
 import Footer from "./components/Footer";
 import Problems from "./components/Problems";
+import ProblemPage from "./components/ProblemPage"
 
-import { PrivateRoute } from "./components/PrivateRoute";
 import { AuthRoute } from "./components/AuthRoute";
 import { restoreCSRF } from "./actions/csrf_actions";
 
@@ -54,13 +54,18 @@ function App() {
               <PythonTerminal />
             </Route>
 
-            <Route path='/problems'>
-              <Problems />
+            <Route exact path="/problems">
+                <Problems/>
             </Route>
 
-            <PrivateRoute exact path='/'>
-              <LandingOrDashboard />
-            </PrivateRoute>
+            <Route exact path="/problems/:problemId">
+                <ProblemPage/>
+            </Route>
+
+
+            <Route exact path="/">
+                <LandingOrDashboard/>
+            </Route>
           </Switch>
         </div>
         <Footer />
