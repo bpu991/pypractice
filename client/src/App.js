@@ -16,11 +16,8 @@ import NavBar from "./components/NavBar";
 import LandingOrDashboard from "./components/LandingOrDashboard";
 import Footer from "./components/Footer";
 import Problems from "./components/Problems";
-<<<<<<< HEAD
 import UserProfile from "./components/UserProfile";
-=======
 import ProblemPage from "./components/ProblemPage"
->>>>>>> master
 
 import { AuthRoute } from "./components/AuthRoute";
 import { restoreCSRF } from "./actions/csrf_actions";
