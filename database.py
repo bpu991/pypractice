@@ -126,14 +126,14 @@ with app.app_context():
     test_bunnyears_3 = Test(problem=problem_bunnyears, call='bunny_ears(6)', expected='12')
 
     ## Problem 14 - Factorial (Recursion)
-    problem_factorial = Problem(title='Factorial', instructions='Write a function that returns the factorial of a given integer, using recursion.', default_content='def factorial(n):\n  # Add your code here!' solution='def factorial(n):\n  if n == 0:\n    return 1\n  return n * factorial(n-1)', difficulty=2, category='recursion')
+    problem_factorial = Problem(title='Factorial', instructions='Write a function that returns the factorial of a given integer, using recursion.', default_content='def factorial(n):\n  # Add your code here!', solution='def factorial(n):\n  if n == 0:\n    return 1\n  return n * factorial(n-1)', difficulty=2, category='recursion')
 
     test_factorial_1 = Test(problem=problem_factorial, call='factorial(1)', expected='1')
     test_factorial_2 = Test(problem=problem_factorial, call='factorial(4)', expected='24')
     test_factorial_3 = Test(problem=problem_factorial, call='factorial(6)', expected='720')
 
     ## Problem 15 - Fibonacci (Recursion)
-    problem_fibonacci = Problem(title='Fibonacci', instructions='The fibonacci sequence is a famous bit of mathematics, and it happens to have a recursive definition. The first two values in the sequence are 0 and 1 (essentially two base cases). Each subsequent value is the sum of the previous two values, so that the whole sequence is: 0, 1, 1, 2, 3, 5, 8, 13, 21 and so on. Define a recursive fibonacci(n) method that returns the nth fibonacci number, with n=0 representing the start of the sequence.', default_content='def fibonacci(n):\n  # Add your code here!' solution='def fibonacci(n):\n  if n == 0\n    return 0\n  if n == 1\n    return 1\n  return fibonacci(n-1) + fibonacci(n-2)\n', difficulty=2, category='recursion')
+    problem_fibonacci = Problem(title='Fibonacci', instructions='The fibonacci sequence is a famous bit of mathematics, and it happens to have a recursive definition. The first two values in the sequence are 0 and 1 (essentially two base cases). Each subsequent value is the sum of the previous two values, so that the whole sequence is: 0, 1, 1, 2, 3, 5, 8, 13, 21 and so on. Define a recursive fibonacci(n) method that returns the nth fibonacci number, with n=0 representing the start of the sequence.', default_content='def fibonacci(n):\n  # Add your code here!', solution='def fibonacci(n):\n  if n == 0\n    return 0\n  if n == 1\n    return 1\n  return fibonacci(n-1) + fibonacci(n-2)\n', difficulty=2, category='recursion')
 
     test_fibonacci_1 = Test(problem=problem_fibonacci, call='fibonacci(0)', expected='0')
     test_fibonacci_2 = Test(problem=problem_fibonacci, call='fibonacci(1)', expected='1')
@@ -141,7 +141,7 @@ with app.app_context():
     test_fibonacci_3 = Test(problem=problem_fibonacci, call='fibonacci(9)', expected='34')
 
     ## Problem 16 - Bunny Ears 2 (Redux) (Recursion)
-    problem_bunnyearsredux = Problem(title='Bunny Ears Redux', instructions='We have bunnies standing in a line, numbered 1, 2, 3... The odd bunnies have the normal two ears. The even bunnies we\'ll say have 3 ears, because they each have a raised foot. Recursively return the number of "ears" in a line of n bunnies', default_content='def bunny_ears_redux(bunnies):\n  # Add your code here!' solution='def bunny_ears_redux(n):\n  if n == 0\n    return 0\n  if n % 2 == 0:\n    return 2 + bunny_ears_redux(bunnies - 1)\n  else:\n    return 3 + bunny_ears_redux(n-1)', difficulty=2, category='recursion')
+    problem_bunnyearsredux = Problem(title='Bunny Ears Redux', instructions='We have bunnies standing in a line, numbered 1, 2, 3... The odd bunnies have the normal two ears. The even bunnies we\'ll say have 3 ears, because they each have a raised foot. Recursively return the number of "ears" in a line of n bunnies', default_content='def bunny_ears_redux(bunnies):\n  # Add your code here!', solution='def bunny_ears_redux(n):\n  if n == 0\n    return 0\n  if n % 2 == 0:\n    return 2 + bunny_ears_redux(bunnies - 1)\n  else:\n    return 3 + bunny_ears_redux(n-1)', difficulty=2, category='recursion')
 
     test_bunnyearsredux_1 = Test(problem=problem_bunnyearsredux, call='bunny_ears_redux(0)', expected='0')
     test_bunnyearsredux_2 = Test(problem=problem_bunnyearsredux, call='bunny_ears_redux(1)', expected='2')
