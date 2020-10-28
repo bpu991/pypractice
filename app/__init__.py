@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, session
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect, generate_csrf
-from flask_login import LoginManager
+from flask_jwt_extended import JWTManager
 
 
 from app.models import db, User
@@ -16,6 +16,7 @@ from app.config import Config
 app = Flask(__name__)
 
 app.config.from_object(Config)
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(problem_routes, url_prefix='/api/problems')
 app.register_blueprint(session_routes, url_prefix='/api/session')
@@ -23,8 +24,8 @@ db.init_app(app)
 Migrate(app, db)
 
 # create login manager
-login = LoginManager(app)
-login.login_view = 'session.login'
+jwt = JWTManager(app)
+# login.login_view = 'session.login'
 
 
 # Application Security
@@ -33,9 +34,9 @@ CSRFProtect(app)
 
 
 # get User object from database on application load
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+# @login.user_loader
+# def load_user(id):
+#     return User.query.get(int(id))
 
 
 @app.after_request
