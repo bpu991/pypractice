@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 import json
-from ..models import User
+from ..models import db, User
 from flask_wtf.csrf import generate_csrf
 # from flask_login import current_user, login_required, login_user
 from flask_jwt_extended import (
@@ -21,6 +21,30 @@ def restore_csrf():
         user = User.query.filter_by(email=email).one()
         return {'csrf_token': generate_csrf(), 'current_user': user.to_dict()}
     return {'csrf_token': generate_csrf()}
+
+
+# user signup route
+@session_routes.route('/signup', methods=["POST"])
+def signup():
+    username = request.json.get('username', None)
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+
+    if not username:
+        return 'Username not found', 400
+    if not email:
+        return 'Email not found', 400
+    if not password:
+        return 'Password not found', 400
+
+    user = User(username=username, email=email, password=password)
+
+    db.session.add(user)
+    db.session.commit()
+    access_token = create_access_token(identity=email)
+    resp = jsonify(current_user=user.to_dict())
+    set_access_cookies(resp, access_token)
+    return resp, 200
 
 
 # user login route

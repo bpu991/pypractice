@@ -6,7 +6,7 @@ import Dashboard from './Dashboard'
 
 
 const LandingOrDashboard = () => {
-    const loggedOut = useSelector(state => !state.authentication.id)
+    const loggedOut = useSelector(state => !state.authentication.user)
     const Component = (loggedOut) ? Landing : Dashboard;
     return (
         <Component />

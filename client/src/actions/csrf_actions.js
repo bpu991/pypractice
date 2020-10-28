@@ -40,7 +40,7 @@ const setCSRF = (csrfToken) => ({
 
 
 
-// const fetchWithCSRF = (resource, init) => (dispatch, getState) => {
+// const fetchWithCSRF = (resource, init) => async (dispatch, getState) => {
 //   const csrfToken = getState().csrf.csrfToken;
 //   if (init.headers) {
 //     init.headers["X-CSRFToken"] = csrfToken;

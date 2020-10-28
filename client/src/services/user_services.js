@@ -1,9 +1,7 @@
 import { apiUrl } from "../config";
-// import { authHeader } from "./authHeader";
 
 export const userService = {
   login,
-  logout,
   register,
 };
 
@@ -27,38 +25,41 @@ async function login(email, password, csrf) {
 
 }
 
-function logout() {
-  // remove user from local storage to log user out
-  localStorage.removeItem("user");
-}
-
-async function register(user, csrf) {
+async function register(new_user, csrf) {
   const requestOptions = {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",
       "X-CSRFToken": csrf,
  },
-    body: JSON.stringify(user),
+    body: JSON.stringify(new_user),
   };
 
-  const response = fetch(`${apiUrl}/users/register`, requestOptions);
-  return handleResponse(response);
+  const response = await fetch(`${apiUrl}/session/signup`, requestOptions);
+  
+  const user = await response.json()
+  console.log('SERVICES', user)
+  
+  return user.current_user || {};
 }
 
-function handleResponse(response) {
-  return response.text().then((text) => {
-    const data = text && JSON.parse(text);
-    if (!response.ok) {
-      if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        logout();
-      }
 
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
-    }
 
-    return data;
-  });
-}
+
+
+// function handleResponse(response) {
+//   return response.text().then((text) => {
+//     const data = text && JSON.parse(text);
+//     if (!response.ok) {
+//       if (response.status === 401) {
+//         // auto logout if 401 response returned from api
+//         logout();
+//       }
+
+//       const error = (data && data.message) || response.statusText;
+//       return Promise.reject(error);
+//     }
+
+//     return data;
+//   });
+// }

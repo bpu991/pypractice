@@ -27,7 +27,6 @@ export function authentication(state = loadUser(), action) {
         user: action.user,
       };
     case userConstants.LOGIN_SUCCESS:
-      console.log('ACTION ASDSA', action.user)
       return {
         user: action.user,
       };
@@ -35,6 +34,11 @@ export function authentication(state = loadUser(), action) {
       return {};
     case userConstants.LOGOUT:
       return {};
+    case userConstants.REGISTER_SUCCESS:
+      return {
+        ...state,
+        user: action.user
+      }
     default:
       return state;
   }
