@@ -1,4 +1,4 @@
-import { LOAD_PROBLEMS, LOAD_PROBLEM_DETAILS } from '../actions/problems'
+import { LOAD_PROBLEMS, LOAD_PROBLEM_DETAILS } from '../actions/problem_actions';
 
 export default function reducer(state = {byId:{}, activeProblem:{}}, action) {
     switch (action.type) {
