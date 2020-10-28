@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InteractiveTerminal = () => {
-    const defaultContent = useSelector((state) => state.entities.problems.activeProblem.default_content)
     const activeProblem = useSelector((state) => state.entities.problems.activeProblem);
     const user = useSelector((state) => state.authentication.user);
     const classes = useStyles();
@@ -60,7 +59,7 @@ const InteractiveTerminal = () => {
             const py = window.pyodide.runPython;
             setTestSuit(new pyTester(activeProblem, py));
         }
-        updateUserCode(defaultContent)
+        updateUserCode(activeProblem.default_content)
   }, [window.pyodide, activeProblem]);
 
     function handleClickRunCode() {
