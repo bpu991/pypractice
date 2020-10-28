@@ -23,6 +23,30 @@ def restore_csrf():
     return {'csrf_token': generate_csrf()}
 
 
+# user signup route
+@session_routes.route('/signup', methods=["POST"])
+def signup():
+    username = request.json.get('username', None)
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+
+    if not username:
+        return 'Username not found', 400
+    if not email:
+        return 'Email not found', 400
+    if not password:
+        return 'Password not found', 400
+
+    user = User(username=username, email=email, password=password)
+
+    db.session.add(user)
+    db.session.commit()
+    access_token = create_access_token(identity=email)
+    resp = jsonify(current_user=user.to_dict())
+    set_access_cookies(resp, access_token)
+    return resp, 200
+
+
 # user login route
 @session_routes.route('/login', methods=['POST'])
 def login():

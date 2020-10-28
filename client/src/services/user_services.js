@@ -1,4 +1,6 @@
+import { restoreCSRF } from "../actions/csrf_actions";
 import { apiUrl } from "../config";
+import { userConstants } from "../constants/user_constants";
 // import { authHeader } from "./authHeader";
 
 export const userService = {
@@ -27,9 +29,16 @@ async function login(email, password, csrf) {
 
 }
 
-function logout() {
-  // remove user from local storage to log user out
-  localStorage.removeItem("user");
+async function logout(csrf) {
+ const requestOptions = {
+    method: "POST",
+    headers: { 
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrf,
+    },
+    credentials: "include",
+  };
+  const response = await fetch(`${apiUrl}/session/logout`, requestOptions);
 }
 
 async function register(user, csrf) {

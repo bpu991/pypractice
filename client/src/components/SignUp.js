@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Redirect } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/styles";
 import Button from "@material-ui/core/Button";
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const loggedOut = useSelector(state => !state.authentication.user)
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -35,6 +36,11 @@ const SignUp = () => {
     dispatch(userActions.register(user));
   };
 
+  if (!loggedOut) {
+    return (
+      <Redirect to='/'/>
+    )
+  }
   return (
     <Container component='main' maxWidth='xs'>
       <div className={classes.space}>
