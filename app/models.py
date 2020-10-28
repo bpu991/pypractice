@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
       return {
         "id": self.id,
         "username": self.username,
-        "solved_problems": len({attempt.problem_id for attempt in self.attempts 
+        "solved_problems": len({attempt.problem_id for attempt in self.attempts
                             if (attempt.solved == True)}),
         "attempted_problems": len({attempt.problem_id for attempt in self.attempts})
       }
@@ -88,7 +88,7 @@ class Problem(db.Model):
             "id": self.id,
             "title": self.title,
             "instructions": self.instructions,
-            "default content": self.default_content,
+            "default_content": self.default_content,
             "solution": self.solution,
             "difficulty": self.difficulty,
             "category": self.category,

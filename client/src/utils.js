@@ -11,7 +11,7 @@ export class pyTester {
   setAndRun(attempt) {
     //get user's attempted solution from ACE terminal
     this.attempt = attempt;
-    this.runTests();
+    return this.runTests();
   }
 
   runTests() {

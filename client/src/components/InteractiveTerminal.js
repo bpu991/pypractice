@@ -39,68 +39,75 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const InteractiveTerminal = () => {
-  const classes = useStyles();
-  const [userCode, setUserCode] = useState("");
-  const [evalResult, setEvalResult] = useState("");
-  const updateUserCode = (value) => {
-    setUserCode(value);
-  };
-  const dispatch = useDispatch();
-  const activeProblem = useSelector(
-    (state) => state.entities.problems.activeProblem
-  );
-  const [testSuit, setTestSuit] = useState();
 
-  const user = useSelector((state) => state.authentication.user);
+const InteractiveTerminal = ({
+    defaultContent,
+    activeProblem,
+    user
+}) => {
+    const classes = useStyles();
+    const [userCode, setUserCode] = useState("");
+    const [evalResult, setEvalResult] = useState("");
+    const updateUserCode = (value) => {
+        setUserCode(value);
+    };
+    const dispatch = useDispatch();
+    const [testSuit, setTestSuit] = useState();
 
-  useEffect(() => {
-    if (window.pyodide) {
-      const py = window.pyodide.runPython;
-      setTestSuit(new pyTester(activeProblem, py));
-    }
+
+
+    useEffect(() => {
+        if (window.pyodide) {
+            const py = window.pyodide.runPython;
+            setTestSuit(new pyTester(activeProblem, py));
+        }
+        updateUserCode(defaultContent)
   }, [window.pyodide, activeProblem]);
 
-  function handleClickRunCode() {
-    const py = window.pyodide.runPython;
-    let evaluatedCode;
+    function handleClickRunCode() {
+        const py = window.pyodide.runPython;
+        let evaluatedCode;
 
-    try {
-      evaluatedCode = py(stdIOWrapper(userCode));
-    } catch (err) {
-      console.log(err);
-    }
-
-    setEvalResult(evaluatedCode);
-  }
-
-  function handleClickRunTests() {
-    testSuit.attempt = userCode;
-    const results = testSuit.runTests();
-    console.log(results);
-    dispatch(runTestsThunk(results));
-  }
-
-  function handleClickSaveCode() {
-    const userId = user.id;
-    const probId = activeProblem.id;
-    let attemptId, i;
-    if (user.attempts) {
-      for (i = 0; i < user.attempts.length; i++) {
-        if (user.attempts[i].problem_id === probId) {
-          attemptId = user.attempts[i].id;
-          break;
+        try {
+            evaluatedCode = py(stdIOWrapper(userCode));
+        } catch (err) {
+            console.log(err);
         }
-      }
-      if (user.attempts[i]) {
-        dispatch(updateCodeThunk(userCode, attemptId));
-        return;
-      }
+
+        setEvalResult(evaluatedCode);
     }
-    dispatch(saveCodeThunk(userCode, userId, probId));
+
+    function handleClickRunTests() {
+        let results;
+        try {
+            results = testSuit.setAndRun(userCode);
+            // const results = testSuit.runTests();
+            dispatch(runTestsThunk(results));
+        } catch(err) {
+            console.log(err)
+        }
   }
 
-  return (
+    function handleClickSaveCode() {
+        const userId = user.id;
+        const probId = activeProblem.id;
+        let attemptId, i;
+        if (user.attempts) {
+            for (i = 0; i < user.attempts.length; i++) {
+                if (user.attempts[i].problem_id === probId) {
+                attemptId = user.attempts[i].id;
+                break;
+                }
+            }
+            if (user.attempts[i]) {
+                dispatch(updateCodeThunk(userCode, attemptId));
+                return;
+            }
+        }
+        dispatch(saveCodeThunk(userCode, userId, probId));
+    }
+
+    return (
     <>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={8} md={8}>
@@ -153,6 +160,7 @@ const InteractiveTerminal = () => {
                 selectionStyle='text'
                 autoScrollEditorIntoView='true'
                 animatedScroll='true'
+                value={userCode}
                 onChange={updateUserCode}
                 width='100%'
                 setOptions={{
@@ -176,4 +184,12 @@ const InteractiveTerminal = () => {
   );
 };
 
-export default InteractiveTerminal;
+const InteractiveTerminalContainer = () => {
+    const defaultContent = useSelector((state) => state.entities.problems.activeProblem.default_content)
+    const activeProblem = useSelector((state) => state.entities.problems.activeProblem);
+    const user = useSelector((state) => state.authentication.user);
+
+    return <InteractiveTerminal defaultContent={defaultContent} activeProblem={activeProblem} user={user} />
+}
+
+export default InteractiveTerminalContainer;
