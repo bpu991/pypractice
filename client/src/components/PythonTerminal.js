@@ -4,8 +4,6 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-tomorrow_night_blue";
 
-import "./PythonTerminal.css";
-
 export default function PythonTerminal({ problemId }) {
   const [userCode, setUserCode] = useState("");
   const updateUserCode = (value) => {
