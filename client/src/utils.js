@@ -15,13 +15,19 @@ export default class pyTester {
   }
 
   runTests() {
+    if (this.attempt === "" || this.args.length === 0) {
+      return;
+    }
     let results = [];
     for (let i = 0; i < this.args.length; i++) {
-      const attempt = this.py(`
+      let attempt = this.py(`
 ${this.attempt}
 result = ${this.args[i].call}
 result
             `);
+      attempt =
+        typeof attempt === "boolean" ? (attempt ? "True" : "False") : attempt;
+      console.log(attempt);
       results.push({
         call: this.args[i].call,
         expected: this.args[i].expected,

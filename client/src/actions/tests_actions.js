@@ -7,9 +7,6 @@ export const runTests = (results) => ({
   results,
 });
 
-export const runTestsThunk = (problem, solution) => async (dispatch) => {
-  console.log(problem, solution);
-  const results = problem.runTests();
-  console.log(results);
+export const runTestsThunk = (results) => async (dispatch) => {
   dispatch(runTests(results));
 };
