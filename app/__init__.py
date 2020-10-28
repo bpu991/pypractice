@@ -17,26 +17,20 @@ app = Flask(__name__)
 
 app.config.from_object(Config)
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(problem_routes, url_prefix='/api/problems')
 app.register_blueprint(session_routes, url_prefix='/api/session')
 db.init_app(app)
 Migrate(app, db)
 
-# create login manager
+# create JWT manager
 jwt = JWTManager(app)
-# login.login_view = 'session.login'
 
 
 # Application Security
 CORS(app)
 CSRFProtect(app)
-
-
-# get User object from database on application load
-# @login.user_loader
-# def load_user(id):
-#     return User.query.get(int(id))
 
 
 @app.after_request

@@ -18,17 +18,13 @@ async function login(email, password, csrf) {
     body: JSON.stringify({ email, password }),
   };
   const response = await fetch(`${apiUrl}/session/login`, requestOptions);
-  const user = await handleResponse(response);
+  
+  // const user = await handleResponse(response);
+  const user = await response.json()
   console.log('SERVICES', user)
-  return () => {
-    // store user details and jwt token in local storage to keep user logged in between page refreshes
-    if (user) {
-    localStorage.setItem("user", JSON.stringify(user));
-    return user;
-  } else {
-    return {};
-  }
-  };
+  
+  return user.current_user || {};
+
 }
 
 function logout() {

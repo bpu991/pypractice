@@ -5,7 +5,7 @@ from flask_wtf.csrf import generate_csrf
 # from flask_login import current_user, login_required, login_user
 from flask_jwt_extended import (
     get_jwt_identity, create_access_token, jwt_required,
-    unset_jwt_cookies
+    unset_jwt_cookies, set_access_cookies
 )
 
 session_routes = Blueprint('session', __name__)
@@ -39,7 +39,9 @@ def login():
     print(user)
     if authenticated:
         access_token = create_access_token(identity=email)
-        return jsonify(access_token=access_token, current_user=user.to_dict()), 200
+        resp = jsonify(current_user=user.to_dict())
+        set_access_cookies(resp, access_token)
+        return resp, 200
 
     return {'errors': ['Invalid email or password']}, 401
 

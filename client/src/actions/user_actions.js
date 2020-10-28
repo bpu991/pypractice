@@ -14,8 +14,9 @@ function login(email, password) {
     dispatch(request({ email }));
     const csrf = getState().csrf.csrfToken;
     try {
-      const user = await userService.login(email, password, csrf);
-      dispatch(success(user));
+      const current_user = await userService.login(email, password, csrf);
+      console.log('CURRENT USER', current_user)
+      dispatch(success(current_user));
 
     } catch (error) {
       dispatch(failure(error.toString()));
