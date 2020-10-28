@@ -18,9 +18,9 @@ c.push('init')
 // sys.stdout.__init__()
 
 // def doubler(num):
-// return 2*num
+//     return 2*num
 
 // print(doubler)
 
-// js.stdout = sys.stdout.getvalue()
-// js.stderr = sys.stderr.getvalue()
+// sys.stdout.getvalue()
+// sys.stderr.getvalue()

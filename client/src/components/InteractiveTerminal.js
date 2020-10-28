@@ -47,9 +47,13 @@ const InteractiveTerminal = () => {
 
     function handleClick() {
         const py = window.pyodide.runPython;
+        let evaluatedCode;
 
-        const evaluatedCode = py(userCode);
-
+        try {
+            evaluatedCode = py(userCode);
+        } catch(err) {
+            console.log(err)
+        }
         setEvalResult(evaluatedCode)
     }
 
