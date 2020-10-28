@@ -5,12 +5,14 @@ import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import SvgLogo from "./SvgLogo";
 import { userActions } from "../actions/user_actions";
 
 const NavBar = () => {
   const loggedOut = useSelector((state) => !state.authentication.user);
+  const profile = useSelector(state => state.authentication.user);
   const location = useLocation();
   const pos = location.pathname === "/" && loggedOut ? "absolute" : "static";
   const dispatch = useDispatch();
@@ -29,7 +31,13 @@ const NavBar = () => {
           Practice
         </Button>
         {!loggedOut ? (
-          <Button onClick={handleSignout}>Sign Out</Button>
+          <>
+            <IconButton component={NavLink} to={`/users/${profile.id}`}>
+              <AccountCircleIcon />
+            </IconButton>
+            <Button onClick={handleSignout}>Sign Out</Button>
+
+          </>
         ) : (
           <>
             <Button component={NavLink} to='/signin'>

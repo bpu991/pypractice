@@ -17,6 +17,7 @@ import Footer from "./components/Footer";
 import Problems from "./components/Problems";
 import UserProfile from "./components/UserProfile";
 import ProblemPage from "./components/ProblemPage";
+import {themeObj} from './theme'
 
 import { AuthRoute } from "./components/AuthRoute";
 import { restoreCSRF } from "./actions/csrf_actions";
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
-  const theme = createMuiTheme();
+  const theme = createMuiTheme(themeObj);
   const classes = useStyles();
   const dispatch = useDispatch();
 
