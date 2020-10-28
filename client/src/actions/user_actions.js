@@ -28,6 +28,7 @@ function login(email, password) {
     return { type: userConstants.LOGIN_REQUEST, user };
   }
   function success(user) {
+    console.log('SUCCESS USE ACTIONS', user)
     return { type: userConstants.LOGIN_SUCCESS, user };
   }
   function failure(error) {

@@ -36,14 +36,18 @@ function logout() {
   localStorage.removeItem("user");
 }
 
-function register(user) {
+async function register(user, csrf) {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrf,
+ },
     body: JSON.stringify(user),
   };
 
-  return fetch(`${apiUrl}/users/register`, requestOptions).then(handleResponse);
+  const response = fetch(`${apiUrl}/users/register`, requestOptions);
+  return handleResponse(response);
 }
 
 function handleResponse(response) {

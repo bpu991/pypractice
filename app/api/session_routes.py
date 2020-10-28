@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+import json
 from ..models import User
 from flask_wtf.csrf import generate_csrf
 from flask_login import current_user, login_required, login_user
@@ -9,7 +10,7 @@ session_routes = Blueprint('session', __name__)
 @session_routes.route('/csrf/restore')
 def restore_csrf():
     user = current_user if current_user.is_authenticated else None
-    return {'csrf_token': generate_csrf(), "current_user": user}
+    return {'csrf_token': generate_csrf()}
 
 
 # user login route
@@ -24,12 +25,11 @@ def login():
         return {'errors': ["Missing required parameters"]}, 400
 
     authenticated, user = User.authenticate(email, password)
-    print("USER____________", user)
     print(authenticated)
     print(user)
     if authenticated:
         login_user(user)
-        return {'current_user': user.id}
+        return {'current_user': user.to_dict()}
 
     return {'errors': ['Invalid email or password']}, 401
 
