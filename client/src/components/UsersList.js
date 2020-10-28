@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
 
-import User from './User';
+// import User from './User';
 
-function UsersList (props) {
-    const [users, setUsers] = useState([]);
+// function UsersList (props) {
+//     const [users, setUsers] = useState([]);
 
-    useEffect(() => {
-        async function fetchData() {
-            const response = await fetch('/api/users/');
-            const responseData = await response.json();
-            setUsers(responseData.users);
-        }
-        fetchData();
-    }, []);
+//     useEffect(() => {
+//         async function fetchData() {
+//             const response = await fetch('/api/users/');
+//             const responseData = await response.json();
+//             setUsers(responseData.users);
+//         }
+//         fetchData();
+//     }, []);
 
-    const userComponents = users.map((user) => <User key={user.id} user={user} />)
-    return (
-        <>
-            <h1>User List: </h1>
-            {userComponents}
-        </>
-        );
-}
+//     const userComponents = users.map((user) => <User key={user.id} user={user} />)
+//     return (
+//         <>
+//             <h1>User List: </h1>
+//             {userComponents}
+//         </>
+//         );
+// }
 
-export default UsersList;
+// export default UsersList;

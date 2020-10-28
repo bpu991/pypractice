@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AceEditor from "react-ace";
 
-import "ace-builds/src-noconflict/mode-python"
-import "ace-builds/src-noconflict/theme-tomorrow_night_blue"
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/theme-tomorrow_night_blue";
 
-import "./PythonTerminal.css";
-
-export default function PythonTerminal({
-  problemId,
-}) {
-  const [userCode, setUserCode] = useState('')
-  const updateUserCode = value => {
+export default function PythonTerminal({ problemId }) {
+  const [userCode, setUserCode] = useState("");
+  const updateUserCode = (value) => {
     setUserCode(value);
-
-  }
+  };
 
   function handleClick() {
     var py = window.pyodide.runPython;
@@ -23,7 +18,6 @@ export default function PythonTerminal({
     var display = document.querySelector("#display");
 
     display.innerHTML = evaluatedCode;
-
   }
 
   return (
@@ -47,14 +41,14 @@ export default function PythonTerminal({
       </p>
       <AceEditor
         maxLines={Infinity}
-        theme="tomorrow_night_blue"
-        fontSize="100%"
+        theme='tomorrow_night_blue'
+        fontSize='100%'
         showPrintMargin={true}
         minLines={20}
-        mode="python"
-        selectionStyle="text"
-        autoScrollEditorIntoView="true"
-        animatedScroll="true"
+        mode='python'
+        selectionStyle='text'
+        autoScrollEditorIntoView='true'
+        animatedScroll='true'
         onChange={updateUserCode}
         setOptions={{
           enableBasicAutocompletion: true,
