@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import { userConstants } from "../constants/user_constants";
 
 function loadUser() {
-  const authToken = Cookies.get("token");
+  const authToken = Cookies.get("access_token_cookie");
   if (authToken) {
     try {
       const payload = authToken.split(".")[1];
@@ -10,8 +10,9 @@ function loadUser() {
       const payloadObj = JSON.parse(decodedPayload);
       const { data } = payloadObj;
       return data;
+      
     } catch (e) {
-      Cookies.remove("token");
+      Cookies.remove("access_token_cookie");
     }
   }
   return {};

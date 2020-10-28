@@ -34,7 +34,7 @@ function App() {
 
   useEffect(() => {
     dispatch(restoreCSRF());
-  });
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

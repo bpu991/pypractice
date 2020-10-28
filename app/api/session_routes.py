@@ -5,15 +5,17 @@ from flask_wtf.csrf import generate_csrf
 # from flask_login import current_user, login_required, login_user
 from flask_jwt_extended import (
     get_jwt_identity, create_access_token, jwt_required,
-    unset_jwt_cookies, set_access_cookies
+    unset_jwt_cookies, set_access_cookies, jwt_optional
 )
 
 session_routes = Blueprint('session', __name__)
 
 
 @session_routes.route('/csrf/restore')
+@jwt_optional
 def restore_csrf():
     email = get_jwt_identity()
+    print(email)
     if email:
         # user = current_user if current_user.is_authenticated else None
         user = User.query.filter_by(email=email).one()

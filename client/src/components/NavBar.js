@@ -9,7 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import SvgLogo from "./SvgLogo";
 
 const NavBar = () => {
-  const loggedOut = useSelector((state) => !state.authentication.id);
+  const loggedOut = useSelector((state) => !state.authentication.user);
   const location = useLocation();
   const pos = location.pathname === "/" && loggedOut ? "absolute" : "static";
 

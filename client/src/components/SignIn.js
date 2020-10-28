@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Redirect } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
@@ -22,6 +22,14 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const loggedOut = useSelector(state => !state.authentication.user)
+
+  if (!loggedOut) {
+    return (
+      <Redirect to='/'/>
+    )
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
