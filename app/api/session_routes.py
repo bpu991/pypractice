@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 import json
-from ..models import User
+from ..models import db, User
 from flask_wtf.csrf import generate_csrf
 # from flask_login import current_user, login_required, login_user
 from flask_jwt_extended import (
