@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useParams, NavLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
@@ -13,6 +13,7 @@ import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import IconButton from '@material-ui/core/IconButton';
 
 import { loadProblemsThunk, loadProblemDetailsThunk } from '../actions/problems';
+import SvgLogo from './SvgLogo'
 
 const tempActiveProblem = {
     id: 3,
@@ -62,13 +63,13 @@ const ProblemPage = () => {
     // get the active problem from state
     // dispatch thunk to obtain the problem with the id from params
     const last = (id) => {
-        const max = Math.max(...tempProblems.map(prob=>prob.id))
-        return (parseInt(id)>=max)
+        const max = Math.max(...tempProblems.map(prob => prob.id))
+        return (parseInt(id) >= max)
     }
 
     const first = (id) => {
-        const min = Math.min(...tempProblems.map(prob=>prob.id))
-        return (parseInt(id)<=min)
+        const min = Math.min(...tempProblems.map(prob => prob.id))
+        return (parseInt(id) <= min)
     }
 
 
@@ -84,16 +85,16 @@ const ProblemPage = () => {
             <Toolbar>
                 <IconButton
                     component={NavLink}
-                    to={`/problems/${parseInt(problemId)-1}`}
+                    to={`/problems/${parseInt(problemId) - 1}`}
                     disabled={first(problemId)}>
-                    <NavigateBefore/>
+                    <NavigateBefore />
                 </IconButton>
-                <Container style={{flexGrow:1}} align="center">
-                    <Button onClick={() => setListOpen(true)}>All problems</Button>
+                <Container style={{ flexGrow: 1 }} align="center">
+                    <Button onClick={() => setListOpen(true)}>Select problem</Button>
                 </Container>
                 <IconButton
                     component={NavLink}
-                    to={`/problems/${parseInt(problemId)+1}`}
+                    to={`/problems/${parseInt(problemId) + 1}`}
                     disabled={last(problemId)}>
                     <NavigateNext />
                 </IconButton>
@@ -106,9 +107,12 @@ const ProblemPage = () => {
                         {tempActiveProblem.instructions}
                     </Typography>
                 </div>
-                {/* <Typography></Typography> */}
 
                 <Drawer anchor="left" open={listOpen} onClose={() => setListOpen(false)}>
+                    <IconButton component={NavLink} to="/">
+                        <SvgLogo />
+                    </IconButton>
+                    <Button component={NavLink} to={'/problems'} style={{ padding: 25 }}>View all Problems </Button>
                     <List>
                         {tempProblems.map((problem, ind) => (
                             <ListItem

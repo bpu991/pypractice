@@ -44,8 +44,8 @@ export const loadAttemptsThunk = (userId) => async dispatch => {
 export const loadProblemDetailsThunk = (problemId) => async dispatch => {
     const res = await fetch(`${apiUrl}/problems/${problemId}`);
     if (res.ok) {
-        const data = await res.json();
-        dispatch(loadProblem(data.problem));
+        const problem = await res.json();
+        dispatch(loadProblem(problem));
     }
 }
 
