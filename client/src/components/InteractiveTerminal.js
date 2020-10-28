@@ -50,16 +50,46 @@ const InteractiveTerminal = () => {
   const [testSuit, setTestSuit] = useState()
 
   useEffect(() => {
-      if (window.pyodide) {
-          const py = window.pyodide.runPython
-          setTestSuit(new pyTester(activeProblem, py))
-      }
+    if (window.pyodide) {
+      const py = window.pyodide.runPython
+
+      py(`
+import io, code, sys
+from js import pyodide
+
+class Console(code.InteractiveConsole):
+    def runcode(self, code):
+        sys.stdout = io.StringIO()
+        sys.stderr = io.StringIO()
+_c = Console(locals=globals())`
+      )
+
+      var c = window.pyodide.pyimport('_c')
+      c.push('')
+
+      setTestSuit(new pyTester(activeProblem, py))
+    }
   }, [window.pyodide])
+
+  function stdWrapper(code) {
+    return `
+sys.stdout.__init__()
+
+${code}
+
+sys.stdout.getvalue()
+`
+  }
 
   function handleClickRunCode() {
     const py = window.pyodide.runPython;
+    let evaluatedCode;
 
-    const evaluatedCode = py(userCode);
+    try {
+        evaluatedCode = py(stdWrapper(userCode));
+    } catch(err) {
+        console.log(err)
+    }
 
     setEvalResult(evaluatedCode);
   }

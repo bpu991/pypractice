@@ -10,8 +10,8 @@ _c = Console(locals=globals())
 `)
 
 
-var c = pyodide.pyimport('_c')
-c.push('init')
+// var c = pyodide.pyimport('_c')
+// c.push('init')
 
 
 // sys.stdout.close()
