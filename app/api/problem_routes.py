@@ -10,10 +10,10 @@ problem_routes = Blueprint('problems', __name__)
 def index():
     problems = Problem.query.with_entities(
         Problem.id, Problem.title, Problem.difficulty).all()
-    return {"problems": [{
+    return {"problems": {problem[0]:{
         'id': problem[0],
         'title': problem[1],
-        'difficulty': problem[2]} for problem in problems]
+        'difficulty': problem[2]} for problem in problems}
     }
 
 

@@ -59,7 +59,7 @@ const Problems = () => {
 
     useEffect(()=> {
         // load problems once that is present
-        // dispatch(loadProblemsThunk())
+        dispatch(loadProblemsThunk())
     }, [])
 
     const goToProblem = (id) => {
