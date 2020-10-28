@@ -9,19 +9,19 @@ export const userActions = {
   _delete,
 };
 
-function login(username, password) {
-  return (dispatch) => {
-    dispatch(request({ username }));
+function login(email, password) {
+  return async (dispatch, getState) => {
+    dispatch(request({ email }));
+    const csrf = getState().csrf.csrfToken;
+    try {
+      const user = await userService.login(email, password, csrf);
+      dispatch(success(user));
 
-    userService.login(username, password).then(
-      (user) => {
-        dispatch(success(user));
-      },
-      (error) => {
-        dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
-      }
-    );
+    } catch (error) {
+      dispatch(failure(error.toString()));
+      dispatch(alertActions.error(error.toString()));
+      
+    }
   };
 
   function request(user) {
@@ -41,19 +41,18 @@ function logout() {
 }
 
 function register(user) {
-  return (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(request(user));
 
-    userService.register(user).then(
-      (user) => {
-        dispatch(success());
-        dispatch(alertActions.success("Registration successful"));
-      },
-      (error) => {
+    try {
+    const csrf = getState().csrf.csrfToken;
+    const new_user = await userService.register(user, csrf);
+    dispatch(success(new_user));
+    dispatch(alertActions.success("Registration successful"));
+    } catch (error){
         dispatch(failure(error.toString()));
         dispatch(alertActions.error(error.toString()));
       }
-    );
   };
 
   function request(user) {

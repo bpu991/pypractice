@@ -1,47 +1,39 @@
 import { apiUrl } from "../config";
-import { authHeader } from "./authHeader";
-import { authContextValue } from "../App";
+// import { authHeader } from "./authHeader";
 
 export const userService = {
   login,
   logout,
   register,
-  getById,
-  delete: _delete,
 };
 
-function login(email, password) {
+async function login(email, password, csrf) {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrf,
+    },
     credentials: "include",
     body: JSON.stringify({ email, password }),
   };
-
-  return authContextValue
-    .fetchWithCSRF(`${apiUrl}/user_routes/login`, requestOptions)
-    .then(handleResponse)
-    .then((user) => {
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
-      localStorage.setItem("user", JSON.stringify(user));
-      return user;
-    });
+  const response = await fetch(`${apiUrl}/session/login`, requestOptions);
+  const user = await handleResponse(response);
+  console.log('SERVICES', user)
+  return () => {
+    // store user details and jwt token in local storage to keep user logged in between page refreshes
+    if (user) {
+    localStorage.setItem("user", JSON.stringify(user));
+    return user;
+  } else {
+    return {};
+  }
+  };
 }
 
 function logout() {
   // remove user from local storage to log user out
   localStorage.removeItem("user");
-}
-
-function getById(id) {
-  const requestOptions = {
-    method: "GET",
-    headers: authHeader(),
-  };
-
-  return authContextValue
-    .fetchWithCSRF(`${apiUrl}/user_routes/${id}`, requestOptions)
-    .then(handleResponse);
 }
 
 function register(user) {
@@ -51,21 +43,7 @@ function register(user) {
     body: JSON.stringify(user),
   };
 
-  return authContextValue
-    .fetchWithCSRF(`${apiUrl}/users/register`, requestOptions)
-    .then(handleResponse);
-}
-
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-  const requestOptions = {
-    method: "DELETE",
-    headers: authHeader(),
-  };
-
-  return authContextValue
-    .fetchWithCSRF(`${apiUrl}/users/${id}`, requestOptions)
-    .then(handleResponse);
+  return fetch(`${apiUrl}/users/register`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
