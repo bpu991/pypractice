@@ -16,7 +16,11 @@ import NavBar from "./components/NavBar";
 import LandingOrDashboard from "./components/LandingOrDashboard";
 import Footer from "./components/Footer";
 import Problems from "./components/Problems";
+<<<<<<< HEAD
+import UserProfile from "./components/UserProfile";
+=======
 import ProblemPage from "./components/ProblemPage"
+>>>>>>> master
 
 import { AuthRoute } from "./components/AuthRoute";
 import { restoreCSRF } from "./actions/csrf_actions";
@@ -58,10 +62,13 @@ function App() {
                 <Problems/>
             </Route>
 
+            <Route path='/users/:userId'>
+                <UserProfile />
+            </Route>
+
             <Route exact path="/problems/:problemId">
                 <ProblemPage/>
             </Route>
-
 
             <Route exact path="/">
                 <LandingOrDashboard/>
