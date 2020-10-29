@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { loadProblemsThunk, loadProblemDetailsThunk } from '../actions/problems';
 import SvgLogo from './SvgLogo'
+import InteractiveTerminal from './InteractiveTerminal'
 
 const tempActiveProblem = {
     id: 3,
@@ -106,13 +107,14 @@ const ProblemPage = () => {
                     <Typography variant="body1" color="textSecondary" gutterBottom paragraph>
                         {tempActiveProblem.instructions}
                     </Typography>
+                    <InteractiveTerminal/>
                 </div>
 
                 <Drawer anchor="left" open={listOpen} onClose={() => setListOpen(false)}>
                     <IconButton component={NavLink} to="/">
                         <SvgLogo />
                     </IconButton>
-                    <Button component={NavLink} to={'/problems'} style={{ padding: 25 }}>View all Problems </Button>
+                    <Button component={NavLink} to={'/problems'} style={{ margin: 25 }}>View all Problems </Button>
                     <List>
                         {tempProblems.map((problem, ind) => (
                             <ListItem

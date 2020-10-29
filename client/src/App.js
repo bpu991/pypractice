@@ -70,7 +70,6 @@ function App() {
         </div>
         <Footer />
       </BrowserRouter>
-      )
     </ThemeProvider>
   );
 }
