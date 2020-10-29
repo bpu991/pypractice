@@ -15,13 +15,6 @@ class User(db.Model, UserMixin):
 
     attempts = db.relationship("Attempt", back_populates="user")
 
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "username": self.username,
-            "email": self.email
-        }
-
     def profile_info(self):
       return {
         "id": self.id,
@@ -85,6 +78,7 @@ class Problem(db.Model):
     default_content = db.Column(db.String, nullable=False)
     solution = db.Column(db.String, nullable=False)
     difficulty = db.Column(db.Integer, nullable=False)
+    category = db.Column(db.String)
 
     attempts = db.relationship("Attempt", back_populates="problem")
     tests = db.relationship("Test", back_populates="problem")
@@ -97,6 +91,7 @@ class Problem(db.Model):
             "default content": self.default_content,
             "solution": self.solution,
             "difficulty": self.difficulty,
+            "category": self.category,
             "attempts": [attempt.to_dict() for attempt in self.attempts] if
             self.attempts else None,
             "tests": [test.to_dict() for test in self.tests] if self.tests
