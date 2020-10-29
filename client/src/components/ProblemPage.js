@@ -12,13 +12,12 @@ import NavigateNext from "@material-ui/icons/NavigateNext";
 import NavigateBefore from "@material-ui/icons/NavigateBefore";
 import IconButton from "@material-ui/core/IconButton";
 
-import { ResultsTable } from "./ResultsTable";
-
 import {
   loadProblemsThunk,
   loadProblemDetailsThunk,
 } from "../actions/problem_actions";
 import SvgLogo from "./SvgLogo";
+import InteractiveTerminal from "./InteractiveTerminal";
 
 const tempActiveProblem = {
   id: 3,
@@ -119,6 +118,7 @@ const ProblemPage = () => {
             paragraph>
             {tempActiveProblem.instructions}
           </Typography>
+          <InteractiveTerminal />
         </div>
 
         <Drawer
@@ -128,7 +128,7 @@ const ProblemPage = () => {
           <IconButton component={NavLink} to='/'>
             <SvgLogo />
           </IconButton>
-          <Button component={NavLink} to={"/problems"} style={{ padding: 25 }}>
+          <Button component={NavLink} to={"/problems"} style={{ margin: 25 }}>
             View all Problems{" "}
           </Button>
           <List>
@@ -148,7 +148,6 @@ const ProblemPage = () => {
           </List>
         </Drawer>
       </Container>
-      <ResultsTable />
     </>
   );
 };
