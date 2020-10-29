@@ -22,6 +22,14 @@ class User(db.Model, UserMixin):
             "email": self.email
         }
 
+    def profile_info(self):
+      return {
+        "id": self.id,
+        "username": self.username,
+        "solved_problems": len({attempt.problem_id for attempt in self.attempts 
+                            if (attempt.solved == True)}),
+        "attempted_problems": len({attempt.problem_id for attempt in self.attempts})
+      }
     @property
     def password(self):
         return self.hashed_password

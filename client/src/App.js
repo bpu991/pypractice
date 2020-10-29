@@ -16,6 +16,7 @@ import NavBar from "./components/NavBar";
 import LandingOrDashboard from "./components/LandingOrDashboard";
 import Footer from "./components/Footer";
 import Problems from "./components/Problems";
+import UserProfile from "./components/UserProfile";
 
 import { PrivateRoute } from "./components/PrivateRoute";
 import { AuthRoute } from "./components/AuthRoute";
@@ -56,6 +57,10 @@ function App() {
 
             <Route path='/problems'>
               <Problems />
+            </Route>
+
+            <Route path='/users/:userId'>
+                <UserProfile />
             </Route>
 
             <PrivateRoute exact path='/'>
