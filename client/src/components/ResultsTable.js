@@ -47,11 +47,7 @@ export default function ResultsTable() {
                       {result.expected}
                     </TableCell>
                     <TableCell style={{ textAlign: "center" }}>
-                      {typeof result.result === "boolean"
-                        ? result.result
-                          ? "True"
-                          : "False"
-                        : result.result}
+                      {result.result}
                     </TableCell>
                   </TableRow>
                 </>
