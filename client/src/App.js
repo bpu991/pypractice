@@ -16,10 +16,11 @@ import NavBar from "./components/NavBar";
 import LandingOrDashboard from "./components/LandingOrDashboard";
 import Footer from "./components/Footer";
 import Problems from "./components/Problems";
-import ProblemPage from "./components/ProblemPage"
+import ProblemPage from "./components/ProblemPage";
 
 import { AuthRoute } from "./components/AuthRoute";
 import { restoreCSRF } from "./actions/csrf_actions";
+import InteractiveTerminal from "./components/InteractiveTerminal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,17 +55,20 @@ function App() {
               <PythonTerminal />
             </Route>
 
-            <Route exact path="/problems">
-                <Problems/>
+            <Route exact path='/problems'>
+              <Problems />
             </Route>
 
-            <Route exact path="/problems/:problemId">
-                <ProblemPage/>
+            <Route exact path='/problems/:problemId'>
+              <ProblemPage />
             </Route>
 
+            <Route exact path='/interactive/:problemId'>
+              <InteractiveTerminal />
+            </Route>
 
-            <Route exact path="/">
-                <LandingOrDashboard/>
+            <Route exact path='/'>
+              <LandingOrDashboard />
             </Route>
           </Switch>
         </div>

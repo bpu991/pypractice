@@ -18,45 +18,16 @@ import {
 } from "../actions/problem_actions";
 import SvgLogo from "./SvgLogo";
 import InteractiveTerminal from "./InteractiveTerminal";
-
-const tempActiveProblem = {
-  id: 3,
-  title: "Sum Thirteen",
-  instructions: `Return the sum of the numbers in the array, returning 0 for an empty array. Except the number 13 is very unlucky, so it does not count and numbers that come immediately after a 13 also do not count.`,
-  default_content: "def sum13(nums):",
-  solution: `def sum13(nums):\n\n
-    return sum(x for prev, x in zip([0]+nums, nums) if 13 not in (prev,x))`,
-  tests: `tests here idk`,
-  difficulty: 2,
-  solved: false, // this may be in a different part of state
-};
-const tempProblems = [
-  {
-    id: 1,
-    title: "Hello World",
-    difficulty: 1,
-    solved: true, // this may be in a different part of state
-  },
-  {
-    id: 2,
-    title: "Monkey Trouble",
-    difficulty: 1,
-    solved: false, // this may be in a different part of state
-  },
-  {
-    id: 3,
-    title: "Sum Thirteen",
-    difficulty: 2,
-    solved: false, // this may be in a different part of state
-  },
-];
+import ResultTable from "./ResultsTable";
 
 const ProblemPage = () => {
   const { problemId } = useParams();
   const dispatch = useDispatch();
   const [listOpen, setListOpen] = useState(false);
 
-  const problems = useSelector((state) => state.entities.problems.byId);
+  const problems = useSelector((state) =>
+    Object.values(state.entities.problems.byId)
+  );
   const activeProblem = useSelector(
     (state) => state.entities.problems.activeProblem
   );
@@ -69,12 +40,12 @@ const ProblemPage = () => {
   // get the active problem from state
   // dispatch thunk to obtain the problem with the id from params
   const last = (id) => {
-    const max = Math.max(...tempProblems.map((prob) => prob.id));
+    const max = Math.max(...problems.map((prob) => prob.id));
     return parseInt(id) >= max;
   };
 
   const first = (id) => {
-    const min = Math.min(...tempProblems.map((prob) => prob.id));
+    const min = Math.min(...problems.map((prob) => prob.id));
     return parseInt(id) <= min;
   };
 
@@ -106,17 +77,17 @@ const ProblemPage = () => {
       <Container maxWidth='md'>
         <div>
           <Typography variant='h6' paragraph>
-            {tempActiveProblem.title}
+            {activeProblem.title}
           </Typography>
           <Typography variant='subtitle1' gutterBottom paragraph>
-            {difficulties[tempActiveProblem.difficulty]}
+            {difficulties[activeProblem.difficulty]}
           </Typography>
           <Typography
             variant='body1'
             color='textSecondary'
             gutterBottom
             paragraph>
-            {tempActiveProblem.instructions}
+            {activeProblem.instructions}
           </Typography>
           <InteractiveTerminal />
         </div>
@@ -132,7 +103,7 @@ const ProblemPage = () => {
             View all Problems{" "}
           </Button>
           <List>
-            {tempProblems.map((problem, ind) => (
+            {problems.map((problem, ind) => (
               <ListItem
                 button
                 component={NavLink}
@@ -148,6 +119,7 @@ const ProblemPage = () => {
           </List>
         </Drawer>
       </Container>
+      <ResultTable />
     </>
   );
 };
