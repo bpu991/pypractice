@@ -17,7 +17,7 @@
 -   RDBMS: PostgresSQL v12
 -   ORM: SQLAlchemy 
 # Deployment
-## Heroku deployment with Docker container
+**Heroku deployment with Docker**
 # Define Database Functionality + Input Data
 1.  Store user information.
 2.  Store problems.
@@ -27,7 +27,6 @@
 -   username => string (40) / not null / unique
 -   email => string (255) / not null / unique
 -   hashed_password => binary string
--   userGeocode => string (128) / not null
 
 **Problems**
 -   title => string / not null
