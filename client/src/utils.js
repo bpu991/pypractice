@@ -15,6 +15,9 @@ export default class pyTester {
   }
 
   runTests() {
+    if (this.attempt === "" || this.args.length === 0) {
+      return;
+    }
     let results = [];
     for (let i = 0; i < this.args.length; i++) {
       const attempt = this.py(`
