@@ -1,6 +1,5 @@
 # Welcome to pyPractice!
-**An app for practicing and building Python fundamentals.**
-authors:
+**An app for practicing and building Python fundamentals. Made by:**
 - Andrew Travers
 - Ben Pu
 - Jony Almeida
