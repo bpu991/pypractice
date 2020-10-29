@@ -12,7 +12,7 @@ import NavigateNext from '@material-ui/icons/NavigateNext';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import IconButton from '@material-ui/core/IconButton';
 
-import { loadProblemsThunk, loadProblemDetailsThunk } from '../actions/problems';
+import { loadProblemsThunk, loadProblemDetailsThunk } from '../actions/problem_actions';
 import SvgLogo from './SvgLogo'
 import InteractiveTerminal from './InteractiveTerminal'
 
