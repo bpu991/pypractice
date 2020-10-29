@@ -26,12 +26,12 @@
 **User**
 -   username => string (40) / not null / unique
 -   email => string (255) / not null / unique
--   hashed_password => binary string
+-   hashed_password => string()128 / not null
 
 **Problems**
 -   title => string / not null
 -   instructions => string / not null  
--   default-content => string / not null
+-   default_content => string / not null
 -   solution => string / not null
 -   difficulty => integer / not null
 -   categories => string
@@ -39,7 +39,7 @@
 **Attempts**
 -   user_id => integer / not null
 -   problem_id => integer / not null
--   saved code => string
+-   saved_code => string
 -   solved => boolean
 
 # Define Database Relations
