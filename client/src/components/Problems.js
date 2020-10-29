@@ -13,7 +13,7 @@ import CheckCircle from '@material-ui/icons/CheckCircle'
 import Container from '@material-ui/core/Container'
 import { green } from '@material-ui/core/colors';
 
-import { loadProblemsThunk } from '../actions/problems';
+import { loadProblemsThunk } from '../actions/problem_actions';
 
 const tempProblems = [{
     id: 1,
