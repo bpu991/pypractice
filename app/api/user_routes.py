@@ -13,8 +13,8 @@ def index():
 @user_routes.route('/<user_param>')
 def get_single_user(user_param):
     user_id = int(user_param)
-    response = User.query.filter(user_id == User.id).all()
-    return {"user": [user.to_dict() for user in response]}
+    response = User.query.filter(user_id == User.id).one()
+    return response.profile_info()
 
 
 # Route for getting all of a user's attempts on every problem
