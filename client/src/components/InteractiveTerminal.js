@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import AceEditor from "react-ace";
 import Typography from "@material-ui/core/Typography";
@@ -46,14 +46,15 @@ const InteractiveTerminal = () => {
     setUserCode(value);
   };
   const dispatch = useDispatch();
+  const  activeProblem = useSelector((state) => state.entities.problems.activeProblem)
+  const [testSuit, setTestSuit] = useState()
 
-  const py = window.pyodide.runPython;
-
-  const testSuit = new pyTester(
-    useSelector((state) => state.entities.problems.activeProblem),
-    py
-  );
-  console.log(testSuit);
+  useEffect(() => {
+      if (window.pyodide) {
+          const py = window.pyodide.runPython
+          setTestSuit(new pyTester(activeProblem, py))
+      }
+  }, [window.pyodide])
 
   function handleClickRunCode() {
     const py = window.pyodide.runPython;
@@ -65,7 +66,6 @@ const InteractiveTerminal = () => {
 
   function handleClickRunTests() {
     testSuit.attempt = userCode;
-    debugger;
     const results = testSuit.runTests();
     console.log(results);
     dispatch(runTestsThunk(results));
