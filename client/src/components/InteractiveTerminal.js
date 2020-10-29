@@ -20,6 +20,7 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-tomorrow_night_blue";
 
 import pyTester from "../utils";
+import ResultsTable from "./ResultsTable";
 import { runTestsThunk } from "../actions/tests_actions";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
+
 const InteractiveTerminal = () => {
   const classes = useStyles();
   const [userCode, setUserCode] = useState("");
@@ -130,7 +133,9 @@ const InteractiveTerminal = () => {
               {evalResult}
             </Typography>
           </Card>
+          <ResultsTable/>
         </Grid>
+
       </Grid>
     </>
   );

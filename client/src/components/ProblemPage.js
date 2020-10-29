@@ -119,7 +119,7 @@ const ProblemPage = () => {
           </List>
         </Drawer>
       </Container>
-      <ResultTable />
+      {/* <ResultTable /> */}
     </>
   );
 };
