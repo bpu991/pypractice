@@ -59,7 +59,6 @@ const ProblemPage = () => {
     <>
       <Toolbar>
         <IconButton
-          onClick={onClickClearEditor}
           component={NavLink}
           to={`/problems/${parseInt(problemId) - 1}`}
           disabled={first(problemId)}>
