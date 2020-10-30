@@ -58,51 +58,51 @@ const UserProfile = () => {
     useEffect(() => {
         const { solved_problems } = profile
 
-        if (solved_problems >= 0) {
+        if (solved_problems >= 1) {
             setSolved([<FirstAchievement />])
         }
 
-        if (solved_problems >= 0) {
+        if (solved_problems >= 2) {
             setSolved(prevState => [...prevState, <SecondAchievement />])
         }
 
-        if (solved_problems >= 0) {
+        if (solved_problems >= 3) {
             setSolved(prevState => [...prevState, <ThirdAchievement />])
         }
 
-        if (solved_problems >= 0) {
+        if (solved_problems >= 4) {
             setSolved(prevState => [...prevState, <FourthAchievement />])
         }
 
-        if (solved_problems >= 0) {
+        if (solved_problems >= 5) {
             setSolved(prevState => [...prevState, <FifthAchievement />])
         }
 
-        if (solved_problems >= 0) {
+        if (solved_problems >= 6) {
             setSolved(prevState => [...prevState, <SixthAchievement />])
         }
 
-        if (solved_problems >= 0) {
+        if (solved_problems >= 7) {
             setSolved(prevState => [...prevState, <SeventhAchievement />])
         }
 
-        if (solved_problems >= 1) {
+        if (solved_problems >= 8) {
             setSolved(prevState => [...prevState, <EighthAchievement />])
         }
 
-        if (solved_problems >= 1) {
+        if (solved_problems >= 9) {
             setSolved(prevState => [...prevState, <NinthAchievement />])
         }
 
-        if (solved_problems >= 1) {
+        if (solved_problems >= 10) {
             setSolved(prevState => [...prevState, <TenthAchievement />])
         }
 
-        if (solved_problems >= 1) {
+        if (solved_problems >= 11) {
             setSolved(prevState => [...prevState, <EleventhAchievement />])
         }
 
-        if (solved_problems >= 1) {
+        if (solved_problems >= 12) {
             setSolved(prevState => [...prevState, <TwelfthAchievement />])
         }
     }, [profile])
@@ -125,51 +125,51 @@ const UserProfile = () => {
     useEffect(() => {
         const { attempted_problems } = profile
 
-        if (attempted_problems >= 0) {
+        if (attempted_problems >= 1) {
             setAttempted([<FirstAttemptedAchievement />])
         }
 
-        if (attempted_problems >= 0) {
+        if (attempted_problems >= 5) {
             setAttempted(prevState => [...prevState, <SecondAttemptedAchievement />])
         }
 
-        if (attempted_problems >= 0) {
+        if (attempted_problems >= 10) {
             setAttempted(prevState => [...prevState, <ThirdAttemptedAchievement />])
         }
 
-        if (attempted_problems >= 0) {
+        if (attempted_problems >= 15) {
             setAttempted(prevState => [...prevState, <FourthAttemptedAchievement />])
         }
 
-        if (attempted_problems >= 0) {
+        if (attempted_problems >= 20) {
             setAttempted(prevState => [...prevState, <FifthAttemptedAchievement />])
         }
 
-        if (attempted_problems >= 0) {
+        if (attempted_problems >= 25) {
             setAttempted(prevState => [...prevState, <SixthAttemptedAchievement />])
         }
 
-        if (attempted_problems >= 0) {
+        if (attempted_problems >= 30) {
             setAttempted(prevState => [...prevState, <SeventhAttemptedAchievement />])
         }
 
-        if (attempted_problems >= 1) {
+        if (attempted_problems >= 35) {
             setAttempted(prevState => [...prevState, <EighthAttemptedAchievement />])
         }
 
-        if (attempted_problems >= 1) {
+        if (attempted_problems >= 40) {
             setAttempted(prevState => [...prevState, <NinthAttemptedAchievement />])
         }
 
-        if (attempted_problems >= 1) {
+        if (attempted_problems >= 45) {
             setAttempted(prevState => [...prevState, <TenthAttemptedAchievement />])
         }
 
-        if (attempted_problems >= 1) {
+        if (attempted_problems >= 50) {
             setAttempted(prevState => [...prevState, <EleventhAttemptedAchievement />])
         }
 
-        if (attempted_problems >= 1) {
+        if (attempted_problems >= 55) {
             setAttempted(prevState => [...prevState, <TwelfthAttemptedAchievement />])
         }
     }, [profile])
