@@ -57,18 +57,18 @@ const InteractiveTerminal = () => {
   useEffect(() => {
     if (window.pyodide) {
       const py = window.pyodide.runPython;
-      setTestSuit(new pyTester(activeProblem, py))
+      setTestSuit(new pyTester(activeProblem, py));
     }
-  }, [window.pyodide]);
+  }, [window.pyodide, activeProblem]);
 
   function handleClickRunCode() {
     const py = window.pyodide.runPython;
     let evaluatedCode;
 
     try {
-        evaluatedCode = py(stdIOWrapper(userCode));
-    } catch(err) {
-        console.log(err)
+      evaluatedCode = py(stdIOWrapper(userCode));
+    } catch (err) {
+      console.log(err);
     }
 
     setEvalResult(evaluatedCode);
