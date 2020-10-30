@@ -19,7 +19,7 @@ import "ace-builds/src-min-noconflict/ext-searchbox";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-tomorrow_night_blue";
 
-import pyTester from "../utils";
+import { pyTester, stdWrapper, ioInit } from "../utils";
 import { runTestsThunk } from "../actions/tests_actions";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,16 +50,27 @@ const InteractiveTerminal = () => {
   const [testSuit, setTestSuit] = useState()
 
   useEffect(() => {
-      if (window.pyodide) {
-          const py = window.pyodide.runPython
-          setTestSuit(new pyTester(activeProblem, py))
-      }
+    if (window.pyodide) {
+      const py = window.pyodide.runPython;
+      ioInit(py);
+
+      var c = window.pyodide.pyimport('_c')
+      c.push('')
+
+      setTestSuit(new pyTester(activeProblem, py))
+    }
   }, [window.pyodide])
+
 
   function handleClickRunCode() {
     const py = window.pyodide.runPython;
+    let evaluatedCode;
 
-    const evaluatedCode = py(userCode);
+    try {
+        evaluatedCode = py(stdWrapper(userCode));
+    } catch(err) {
+        console.log(err)
+    }
 
     setEvalResult(evaluatedCode);
   }

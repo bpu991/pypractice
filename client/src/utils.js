@@ -1,4 +1,4 @@
-export default class pyTester {
+export class pyTester {
   constructor(problem, py) {
     this.problemId = problem.id;
     this.sol = problem.solution;
@@ -37,4 +37,27 @@ result
     }
     return results;
   }
+}
+
+export function stdWrapper(code) {
+  return `
+sys.stdout.__init__()
+
+${code}
+
+sys.stdout.getvalue()
+`
+}
+
+export function ioInit(py) {
+  py(`
+import io, code, sys
+from js import pyodide
+
+class Console(code.InteractiveConsole):
+    def runcode(self, code):
+        sys.stdout = io.StringIO()
+        sys.stderr = io.StringIO()
+_c = Console(locals=globals())`
+  )
 }
