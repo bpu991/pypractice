@@ -2,7 +2,6 @@ export const userService = {
   login,
   register,
   saveCode,
-  updateCode,
 };
 
 async function login(email, password, csrf) {
@@ -57,27 +56,27 @@ async function saveCode(code, userId, probId, csrf) {
     options
   );
 
-  const updated_code = response.json();
+  const attempts = response.json();
 
-  return updated_code || "";
+  return attempts || "";
 }
 
-async function updateCode(code, attemptId, csrf) {
-  const options = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": csrf,
-    },
-    body: JSON.stringify(code),
-  };
+// async function updateCode(code, attemptId, csrf) {
+//   const options = {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "X-CSRFToken": csrf,
+//     },
+//     body: JSON.stringify(code),
+//   };
 
-  const response = await fetch(
-    `/api/users/attempts/${attemptId}`,
-    options
-  );
+//   const response = await fetch(
+//     `/api/users/attempts/${attemptId}`,
+//     options
+//   );
 
-  const updated_code = response.json();
+//   const updated_code = response.json();
 
-  return updated_code || "";
-}
+//   return updated_code || "";
+// }

@@ -3,10 +3,11 @@ import problems from './problems';
 import results from "./tests_reducer";
 import profiles from './profiles';
 
+
 const entitiesReducer = combineReducers({
   problems,
   results,
-  profiles
+  profiles,
 });
 
 export default entitiesReducer;

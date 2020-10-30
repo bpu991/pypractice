@@ -55,7 +55,7 @@ export function users(state = {}, action) {
       }
       return {
         ...state,
-        [authentication.user.attempts[attemptId]]: action.currentAttempt,
+        [authentication.user.attempts[attemptId]]: action.attempt,
       };
     default:
       return state;

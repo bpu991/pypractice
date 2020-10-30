@@ -11,7 +11,7 @@ import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 
 export default function ResultsTable() {
-  const results = useSelector((state) => state.tests.results);
+  const results = useSelector((state) => state.entities.results.results);
   if (!results) return null;
 
   return (

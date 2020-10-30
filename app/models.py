@@ -129,7 +129,9 @@ class Problem(db.Model):
                           if user_id == attempt.user_id
                           and attempt.solved]) > 0,
             "attempts": [attempt.to_dict() for attempt in self.attempts
-                         if user_id == attempt.user_id]
+                         if user_id == attempt.user_id],
+            "tests": [test.to_dict() for test in self.tests] if self.tests
+            else None,
         }
 
 

@@ -50,12 +50,13 @@ def post_attempt(user_param, problem_param):
 
     db.session.add(attempt)
     db.session.commit()
+    attempts = Attempt.query.filter(user_id == Attempt.user_id).all()
 
-    return attempt.to_dict()
+    return {"attempts": [attempt.to_dict() for attempt in attempts]}
 
 
 # Route for updating a problem attempt to the db
-@user_routes.route('/attempts/<attemppt_param>', methods=["PUT"])
+@user_routes.route('/attempts/<attempt_param>', methods=["PUT"])
 def update_attempt(user_param, problem_param):
     attemptId = int(attempt_param)
 
