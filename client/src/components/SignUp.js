@@ -84,7 +84,7 @@ const SignUp = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button type='submit' fullWidth variant='contained' color='primary'>
+          <Button type='submit' fullWidth variant='contained' color='primary' size='large'>
             Sign Up
           </Button>
           <Link component={NavLink} to='/signin' variant='body2'>

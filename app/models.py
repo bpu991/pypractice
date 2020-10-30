@@ -16,13 +16,16 @@ class User(db.Model, UserMixin):
     attempts = db.relationship("Attempt", back_populates="user")
 
     def profile_info(self):
-      return {
-        "id": self.id,
-        "username": self.username,
-        "solved_problems": len({attempt.problem_id for attempt in self.attempts 
-                            if (attempt.solved == True)}),
-        "attempted_problems": len({attempt.problem_id for attempt in self.attempts})
-      }
+        return {
+              "id": self.id,
+              "username": self.username,
+              "solved_problems": len({attempt.problem_id
+                                      for attempt in self.attempts
+                                      if (attempt.solved)}),
+              "attempted_problems": len({attempt.problem_id
+                                        for attempt in self.attempts})
+        }
+
     @property
     def password(self):
         return self.hashed_password
@@ -36,8 +39,8 @@ class User(db.Model, UserMixin):
             "id": self.id,
             "username": self.username,
             "email": self.email,
-            "attempts": [attempt.to_dict() for attempt in self.attempts] if
-            self.attempts else None
+            # "attempts": [attempt.to_dict() for attempt in self.attempts] if
+            # self.attempts else None
         }
 
     @classmethod
@@ -88,7 +91,7 @@ class Problem(db.Model):
             "id": self.id,
             "title": self.title,
             "instructions": self.instructions,
-            "default content": self.default_content,
+            "default_content": self.default_content,
             "solution": self.solution,
             "difficulty": self.difficulty,
             "category": self.category,
@@ -96,6 +99,37 @@ class Problem(db.Model):
             self.attempts else None,
             "tests": [test.to_dict() for test in self.tests] if self.tests
             else None,
+        }
+
+    def dict_with_user_attempts(self, user_id):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "difficulty": self.difficulty,
+            "category": self.category,
+            "attempted": len([attempt for attempt in self.attempts
+                             if user_id == attempt.user_id]) > 0,
+            "solved": len([attempt for attempt in self.attempts
+                          if user_id == attempt.user_id
+                          and attempt.solved]) > 0,
+        }
+
+    def full_with_user_attempts(self, user_id):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "instructions": self.instructions,
+            "default content": self.default_content,
+            "solution": self.solution,
+            "difficulty": self.difficulty,
+            "category": self.category,
+            "attempted": len([attempt for attempt in self.attempts
+                             if user_id == attempt.user_id]) > 0,
+            "solved": len([attempt for attempt in self.attempts
+                          if user_id == attempt.user_id
+                          and attempt.solved]) > 0,
+            "attempts": [attempt.to_dict() for attempt in self.attempts
+                         if user_id == attempt.user_id]
         }
 
 

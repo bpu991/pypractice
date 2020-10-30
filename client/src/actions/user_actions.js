@@ -1,7 +1,6 @@
 import { userConstants } from "../constants/user_constants";
 import { userService } from "../services/user_services";
 import { alertActions } from "./alert_actions";
-import { apiUrl } from "../config";
 
 function login(email, password) {
   return async (dispatch, getState) => {
@@ -39,7 +38,7 @@ const logout = () => async (dispatch, getState) => {
     },
     credentials: "include",
   };
-  const response = await fetch(`${apiUrl}/session/logout`, requestOptions);
+  const response = await fetch(`/api/session/logout`, requestOptions);
   if (response.ok) {
     dispatch(removeUser());
   }
@@ -75,8 +74,38 @@ function register(user) {
   }
 }
 
+export const saveCodeThunk = (code, userId, probId) => async (
+  dispatch,
+  getState
+) => {
+  const csrf = getState().csrf.csrfToken;
+  const currentAttempt = await userService.saveCode(code, userId, probId, csrf);
+
+  dispatch(actionSaveCode(), currentAttempt);
+};
+
+function actionSaveCode() {
+  return { type: userConstants.SAVE_CODE };
+}
+
+export const updateCodeThunk = (code, attemptId) => async (
+  dispatch,
+  getState
+) => {
+  const csrf = getState().csrf.csrfToken;
+  const currentAttempt = await userService.updateCode(code, attemptId, csrf);
+
+  dispatch(actionUpdateCode(), currentAttempt);
+};
+
+function actionUpdateCode() {
+  return { type: userConstants.UPDATE_CODE };
+}
+
 export const userActions = {
   login,
   logout,
   register,
+  saveCodeThunk,
+  updateCodeThunk,
 };

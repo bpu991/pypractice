@@ -24,11 +24,12 @@ with app.app_context():
     # Problems
 
     ## Problem 1 - Sleep In (Warm-Up)
-    problem_sleepin = Problem(title='Sleep In', instructions="Define a function called sleep_in that takes weekday and vacation parameters. Weekday is true if it is a weekday, and vacation is true if we are on vacation. We sleep in if it is not a weekday or we're on vacation. Return true if we sleep in.", default_content='', solution='def sleep_in(weekday, vacation):\n  return (not weekend) or vacation', difficulty=1, category='Warm-Up')
+    problem_sleepin = Problem(title='Sleep In', instructions="Define a function called sleep_in that takes weekday and vacation parameters. Weekday is true if it is a weekday, and vacation is true if we are on vacation. We sleep in if it is not a weekday or we're on vacation. Return true if we sleep in.", default_content='def sleep_in(weekday, vacation):\n  pass\n', solution='def sleep_in(weekday, vacation):\n  return (not weekend) or vacation', difficulty=1, category='Warm-Up')
 
     test_sleepin_1 = Test(problem=problem_sleepin, call='sleep_in(True, True)', expected='True')
     test_sleepin_2 = Test(problem=problem_sleepin, call='sleep_in(True, False)', expected='False')
     test_sleepin_3 = Test(problem=problem_sleepin, call='sleep_in(False, True)', expected='True')
+
     ## Problem 2 - Monkey Trouble (Warm-Up)
     problem_monkeytrouble = Problem(title='Monkey Trouble', instructions="We have two monkeys, Zira and Galen, and the boolean parameters zira_smile and galen_smile that indicate whether each is smiling. We are in trouble if they are both smiling or if neither is smiling. Define a function called monkey_trouble that returns True if we are in trouble.", default_content='', solution='def (weekday, vacation):\n  return (not weekend) or vacation', difficulty=1, category='Warm-Up')
 

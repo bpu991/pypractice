@@ -2,44 +2,15 @@ from flask import Blueprint, jsonify, request
 import json
 from ..models import db, User
 from flask_wtf.csrf import generate_csrf
-# from flask_login import current_user, login_required, login_user
-from flask_jwt_extended import (
-    get_jwt_identity, create_access_token, jwt_required,
-    unset_jwt_cookies, set_access_cookies, jwt_optional,
-    create_refresh_token, set_refresh_cookies
-)
+from flask_login import current_user, login_required, login_user, logout_user
 
 session_routes = Blueprint('session', __name__)
 
 
 @session_routes.route('/csrf/restore')
-@jwt_optional
 def restore_csrf():
-    print(1)
-
-    email = get_jwt_identity()
-    print(2)
-    print(email)
-    print(3)
-    if email:
-        # Create the tokens we will be sending back to the user
-        access_token = create_access_token(identity=email)
-        refresh_token = create_refresh_token(identity=email)
-
-        # user = current_user if current_user.is_authenticated else None
-        print(4)
-        user = User.query.filter_by(email=email).one()
-
-        # Set the JWT cookies in the response
-        resp = jsonify(current_user=user.to_dict(), csrf_token=generate_csrf())
-        set_access_cookies(resp, access_token)
-        set_refresh_cookies(resp, refresh_token)
-        return resp, 200
-
-        # print(5)
-        # return {'csrf_token': generate_csrf(), 'current_user': user.to_dict()}
-    print(6)
-    return {'csrf_token': generate_csrf()}
+    user = current_user.to_dict() if current_user.is_authenticated else None
+    return {'csrf_token': generate_csrf(), "current_user": user}
 
 
 # user signup route
@@ -60,14 +31,9 @@ def signup():
 
     db.session.add(user)
     db.session.commit()
-    # Create the tokens we will be sending back to the user
-    access_token = create_access_token(identity=email)
-    refresh_token = create_refresh_token(identity=email)
-
-    # Set the JWT cookies in the response
+    # to do: maybe add validators
+    login_user(user)
     resp = jsonify(current_user=user.to_dict())
-    set_access_cookies(resp, access_token)
-    set_refresh_cookies(resp, refresh_token)
     return resp, 200
 
 
@@ -85,26 +51,18 @@ def login():
         return jsonify({"msg": "Missing password parameter"}), 400
 
     authenticated, user = User.authenticate(email, password)
-    print(authenticated)
-    print(user)
 
     if authenticated:
-        # Create the tokens we will be sending back to the user
-        access_token = create_access_token(identity=email)
-        refresh_token = create_refresh_token(identity=email)
-
-        # Set the JWT cookies in the response
+        login_user(user)
         resp = jsonify(current_user=user.to_dict())
-        set_access_cookies(resp, access_token)
-        set_refresh_cookies(resp, refresh_token)
         return resp, 200
 
     return {'errors': ['Invalid email or password']}, 401
 
 
 @session_routes.route('/logout', methods=['POST'])
-@jwt_required
+@login_required
 def logout():
     resp = jsonify({'msg': 'You have been logged out'})
-    unset_jwt_cookies(resp)
+    logout_user()
     return resp, 200

@@ -17,10 +17,12 @@ import LandingOrDashboard from "./components/LandingOrDashboard";
 import Footer from "./components/Footer";
 import Problems from "./components/Problems";
 import UserProfile from "./components/UserProfile";
-import ProblemPage from "./components/ProblemPage"
+import ProblemPage from "./components/ProblemPage";
+import {themeObj} from './theme'
 
 import { AuthRoute } from "./components/AuthRoute";
 import { restoreCSRF } from "./actions/csrf_actions";
+import InteractiveTerminal from "./components/InteractiveTerminal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
-  const theme = createMuiTheme();
+  const theme = createMuiTheme(themeObj);
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -55,20 +57,20 @@ function App() {
               <PythonTerminal />
             </Route>
 
-            <Route exact path="/problems">
-                <Problems/>
+            <Route exact path='/problems'>
+              <Problems />
             </Route>
 
             <Route path='/users/:userId'>
-                <UserProfile />
+              <UserProfile />
             </Route>
 
-            <Route exact path="/problems/:problemId">
-                <ProblemPage/>
+            <Route exact path='/problems/:problemId'>
+              <ProblemPage />
             </Route>
 
-            <Route exact path="/">
-                <LandingOrDashboard/>
+            <Route exact path='/'>
+              <LandingOrDashboard />
             </Route>
           </Switch>
         </div>
