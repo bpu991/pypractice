@@ -15,6 +15,7 @@ export default class pyTester {
   }
 
   runTests() {
+    console.log(this.args);
     if (this.attempt === "" || this.args.length === 0) {
       return;
     }
