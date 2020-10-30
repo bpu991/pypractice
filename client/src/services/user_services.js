@@ -1,4 +1,3 @@
-import { apiUrl } from "../config";
 
 export const userService = {
   login,
@@ -17,7 +16,7 @@ async function login(email, password, csrf) {
     credentials: "include",
     body: JSON.stringify({ email, password }),
   };
-  const response = await fetch(`${apiUrl}/session/login`, requestOptions);
+  const response = await fetch(`/api/session/login`, requestOptions);
 
   // const user = await handleResponse(response);
   const user = await response.json();
@@ -36,7 +35,7 @@ async function register(new_user, csrf) {
     body: JSON.stringify(new_user),
   };
 
-  const response = await fetch(`${apiUrl}/session/signup`, requestOptions);
+  const response = await fetch(`/api/session/signup`, requestOptions);
 
   const user = await response.json();
   console.log("SERVICES", user);
@@ -55,7 +54,7 @@ async function saveCode(code, userId, probId, csrf) {
   };
 
   const response = await fetch(
-    `${apiUrl}/users/${userId}/attempts/${probId}`,
+    `/api/users/${userId}/attempts/${probId}`,
     options
   );
 
@@ -75,7 +74,7 @@ async function updateCode(code, attemptId, csrf) {
   };
 
   const response = await fetch(
-    `${apiUrl}/users/attempts/${attemptId}`,
+    `/api/users/attempts/${attemptId}`,
     options
   );
 
