@@ -12,45 +12,45 @@ import CloseIcon from "@material-ui/icons/Close";
 
 export default function ResultsTable() {
   const results = useSelector((state) => state.tests.results);
-
   if (!results) return null;
 
   return (
     <>
       <TableContainer
-        style={{ border: "3px solid limegreen", maxWidth: "500px" }}>
-        <Table style={{ textAlign: "center" }}>
+        // style={{ border: "3px solid limegreen", maxWidth: "500px" }}
+        >
+        <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>Pass</TableCell>
-              <TableCell>Function call</TableCell>
-              <TableCell>Expected</TableCell>
-              <TableCell>Result</TableCell>
+              <TableCell padding="checkbox"></TableCell>
+              <TableCell style={{paddingLeft:3, paddingRight:3}}>Function call</TableCell>
+              <TableCell >Expected</TableCell>
+              <TableCell >Result</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {results.map((result, i) => {
               return (
-                <>
+                // <div >
                   <TableRow key={i}>
-                    <TableCell style={{ textAlign: "center" }}>
+                    <TableCell style={{ textAlign: "center", paddingLeft:3, paddingRight:3}}>
                       {result.pass ? (
                         <CheckIcon style={{ color: "limegreen" }} />
                       ) : (
                         <CloseIcon style={{ color: "red" }} />
                       )}
                     </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
+                    <TableCell padding="none"style={{ fontFamily: "monospace" }}>
                       {result.call}
                     </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
+                    <TableCell style={{ fontFamily: "monospace" }}>
                       {result.expected}
                     </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
+                    <TableCell style={{ fontFamily: "monospace" }}>
                       {result.result}
                     </TableCell>
                   </TableRow>
-                </>
+                // </div>
               );
             })}
           </TableBody>

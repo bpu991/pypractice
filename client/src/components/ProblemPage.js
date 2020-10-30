@@ -13,115 +13,118 @@ import NavigateBefore from "@material-ui/icons/NavigateBefore";
 import IconButton from "@material-ui/core/IconButton";
 
 import {
-  loadProblemsThunk,
-  loadProblemDetailsThunk,
+    loadProblemsThunk,
+    loadProblemDetailsThunk,
 } from "../actions/problem_actions";
 import SvgLogo from "./SvgLogo";
 import InteractiveTerminal from "./InteractiveTerminal";
 import ResultTable from "./ResultsTable";
 
 const ProblemPage = () => {
-  const { problemId } = useParams();
-  const dispatch = useDispatch();
-  const [listOpen, setListOpen] = useState(false);
+    const { problemId } = useParams();
+    const dispatch = useDispatch();
+    const [listOpen, setListOpen] = useState(false);
 
-  const problems = useSelector((state) =>
-    Object.values(state.entities.problems.byId)
-  );
-  const activeProblem = useSelector(
-    (state) => state.entities.problems.activeProblem
-  );
+    const problems = useSelector((state) =>
+        Object.values(state.entities.problems.byId)
+    );
+    const activeProblem = useSelector(
+        (state) => state.entities.problems.activeProblem
+    );
 
-  useEffect(() => {
-    dispatch(loadProblemsThunk());
-    dispatch(loadProblemDetailsThunk(problemId));
-  }, [problemId]);
+    useEffect(() => {
+        dispatch(loadProblemsThunk());
+        dispatch(loadProblemDetailsThunk(problemId));
+    }, [problemId]);
 
-  // get the active problem from state
-  // dispatch thunk to obtain the problem with the id from params
-  const last = (id) => {
-    const max = Math.max(...problems.map((prob) => prob.id));
-    return parseInt(id) >= max;
-  };
+    // get the active problem from state
+    // dispatch thunk to obtain the problem with the id from params
+    const last = (id) => {
+        const max = Math.max(...problems.map((prob) => prob.id));
+        return parseInt(id) >= max;
+    };
 
-  const first = (id) => {
-    const min = Math.min(...problems.map((prob) => prob.id));
-    return parseInt(id) <= min;
-  };
+    const first = (id) => {
+        const min = Math.min(...problems.map((prob) => prob.id));
+        return parseInt(id) <= min;
+    };
 
-  const difficulties = {
-    1: "Easy",
-    2: "Intermediate",
-    3: "Difficult",
-  };
+    const difficulties = {
+        1: "Easy",
+        2: "Intermediate",
+        3: "Difficult",
+    };
 
-  return (
-    <>
-      <Toolbar>
-        <IconButton
-          component={NavLink}
-          to={`/problems/${parseInt(problemId) - 1}`}
-          disabled={first(problemId)}>
-          <NavigateBefore />
-        </IconButton>
-        <Container style={{ flexGrow: 1 }} align='center'>
-          <Button onClick={() => setListOpen(true)}>Select problem</Button>
-        </Container>
-        <IconButton
-          component={NavLink}
-          to={`/problems/${parseInt(problemId) + 1}`}
-          disabled={last(problemId)}>
-          <NavigateNext />
-        </IconButton>
-      </Toolbar>
-      <Container maxWidth='md'>
-        <div>
-          <Typography variant='h6' paragraph>
-            {activeProblem.title}
-          </Typography>
-          <Typography variant='subtitle1' gutterBottom paragraph>
-            {difficulties[activeProblem.difficulty]}
-          </Typography>
-          <Typography
-            variant='body1'
-            color='textSecondary'
-            gutterBottom
-            paragraph>
-            {activeProblem.instructions}
-          </Typography>
-          <InteractiveTerminal />
-        </div>
+    return (
+        <>
+            <Toolbar>
+                <IconButton
+                    component={NavLink}
+                    to={`/problems/${parseInt(problemId) - 1}`}
+                    disabled={first(problemId)}>
+                    <NavigateBefore />
+                </IconButton>
+                <Container style={{ flexGrow: 1 }} align='center'>
+                    <Button onClick={() => setListOpen(true)}>Select problem</Button>
+                </Container>
+                <IconButton
+                    component={NavLink}
+                    to={`/problems/${parseInt(problemId) + 1}`}
+                    disabled={last(problemId)}>
+                    <NavigateNext />
+                </IconButton>
+            </Toolbar>
+            <Container maxWidth='md'>
+                <div>
+                    <Typography variant='h6' paragraph>
+                        {activeProblem.title}
+                    </Typography>
+                    <Typography variant='subtitle1' gutterBottom paragraph>
+                        {difficulties[activeProblem.difficulty]}
+                    </Typography>
+                    <Typography
+                        variant='body1'
+                        color='textSecondary'
+                        gutterBottom
+                        paragraph>
+                        {activeProblem.instructions}
+                    </Typography>
+                    <InteractiveTerminal />
+                </div>
 
-        <Drawer
-          anchor='left'
-          open={listOpen}
-          onClose={() => setListOpen(false)}>
-          <IconButton component={NavLink} to='/'>
-            <SvgLogo />
-          </IconButton>
-          <Button component={NavLink} to={"/problems"} style={{ margin: 25 }}>
-            View all Problems{" "}
-          </Button>
-          <List>
-            {problems.map((problem, ind) => (
-              <ListItem
-                button
-                component={NavLink}
-                to={`/problems/${problem.id}`}
-                key={problem.id}
-                onClick={() => setListOpen(false)}
-                selected={parseInt(problemId) === problem.id}>
-                <Typography color='textPrimary'>
-                  {`${ind + 1}. ${problem.title}`}
-                </Typography>
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-      </Container>
-      {/* <ResultTable /> */}
-    </>
-  );
+                <Drawer
+                    anchor='left'
+                    open={listOpen}
+                    onClose={() => setListOpen(false)}>
+                    <div style={{marginTop:50}}/>
+                    <div style={{margin:"0 auto"}}>
+                        <IconButton component={NavLink} to='/'>
+                            <SvgLogo />
+                        </IconButton>
+                    </div>
+                    <Button component={NavLink} to={"/problems"} style={{ margin: 25 }}>
+                        View all Problems{" "}
+                    </Button>
+                    <List>
+                        {problems.map((problem, ind) => (
+                            <ListItem
+                                button
+                                component={NavLink}
+                                to={`/problems/${problem.id}`}
+                                key={problem.id}
+                                onClick={() => setListOpen(false)}
+                                selected={parseInt(problemId) === problem.id}>
+                                <Typography color='textPrimary'>
+                                    {`${ind + 1}. ${problem.title}`}
+                                </Typography>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Drawer>
+            </Container>
+            {/* <ResultTable /> */}
+        </>
+    );
 };
 
 export default ProblemPage;

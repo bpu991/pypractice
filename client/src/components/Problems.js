@@ -59,6 +59,7 @@ const Problems = () => {
                   onClick={() => goToProblem(problem.id)}>
                   <TableCell padding='none'>{ind + 1}</TableCell>
                   <TableCell>{problem.title}</TableCell>
+                  <TableCell>{problem.category}</TableCell>
                   <TableCell>{difficulties[problem.difficulty]}</TableCell>
                   <TableCell padding='none'>
                     {problem.solved ? (
