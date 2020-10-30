@@ -1,4 +1,3 @@
-import { apiUrl } from '../config';
 
 // action types
 // put collection of problems into state
@@ -24,7 +23,7 @@ export const loadProblem = (problem) => ({
 
 // load all problems
 export const loadProblemsThunk = () => async dispatch => {
-    const res = await fetch(`${apiUrl}/problems`);
+    const res = await fetch(`/api/problems`);
     if (res.ok) {
         const data = await res.json();
         dispatch(loadProblems(data.problems));
@@ -33,7 +32,7 @@ export const loadProblemsThunk = () => async dispatch => {
 
 // load problems that current user has attempted
 export const loadAttemptsThunk = (userId) => async dispatch => {
-    const res = await fetch(`${apiUrl}/users/${userId}/attempts`);
+    const res = await fetch(`/api/users/${userId}/attempts`);
     if (res.ok) {
         const problems = await res.json();
         dispatch(loadProblems(problems));
@@ -42,7 +41,7 @@ export const loadAttemptsThunk = (userId) => async dispatch => {
 
 // thunk for loading the details for a single problem
 export const loadProblemDetailsThunk = (problemId) => async dispatch => {
-    const res = await fetch(`${apiUrl}/problems/${problemId}`);
+    const res = await fetch(`/api/problems/${problemId}`);
     if (res.ok) {
         const problem = await res.json();
         dispatch(loadProblem(problem));
