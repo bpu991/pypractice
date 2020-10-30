@@ -9,7 +9,6 @@ import {
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-import PythonTerminal from "./components/PythonTerminal";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import NavBar from "./components/NavBar";
@@ -51,10 +50,6 @@ function App() {
             </AuthRoute>
             <Route exact path='/signup'>
               <SignUp />
-            </Route>
-
-            <Route path='/testing'>
-              <PythonTerminal />
             </Route>
 
             <Route exact path='/problems'>
