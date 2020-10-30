@@ -91,7 +91,7 @@ class Problem(db.Model):
             "id": self.id,
             "title": self.title,
             "instructions": self.instructions,
-            "default content": self.default_content,
+            "default_content": self.default_content,
             "solution": self.solution,
             "difficulty": self.difficulty,
             "category": self.category,

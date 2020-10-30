@@ -1,4 +1,4 @@
-export default class pyTester {
+export class pyTester {
   constructor(problem, py) {
     this.problemId = problem.id;
     this.sol = problem.solution;
@@ -11,10 +11,11 @@ export default class pyTester {
   setAndRun(attempt) {
     //get user's attempted solution from ACE terminal
     this.attempt = attempt;
-    this.runTests();
+    return this.runTests();
   }
 
   runTests() {
+    console.log(this.args);
     if (this.attempt === "" || this.args.length === 0) {
       return;
     }
@@ -37,4 +38,26 @@ result
     }
     return results;
   }
+}
+
+
+export function stdIOWrapper(code) {
+  code = code.split('\n')
+  for(let i = 1; i < code.length; i++) {
+    code[i] = code[i] === '' ? '' : '  ' + code[i]
+  }
+  code = code.join('\n')
+  code = `
+import sys, io
+sys.stdout = io.StringIO()
+sys.stdout.__init__()
+
+try:
+  ${code}
+except:
+  print(sys.exc_info())
+
+sys.stdout.getvalue()
+  `
+  return code
 }

@@ -1,4 +1,7 @@
 import os
+import sys
+import logging
+from app.config import Config
 from flask import Flask, render_template, request, session
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -11,9 +14,11 @@ from app.api.user_routes import user_routes
 from app.api.problem_routes import problem_routes
 from app.api.session_routes import session_routes
 
-from app.config import Config
-
 app = Flask(__name__)
+
+app.logger.setLevel(logging.ERROR)
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+
 
 app.config.from_object(Config)
 # app.config['JWT_TOKEN_LOCATION'] = ['cookies']

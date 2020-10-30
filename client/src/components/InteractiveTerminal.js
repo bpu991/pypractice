@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, getState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import AceEditor from "react-ace";
 import Typography from "@material-ui/core/Typography";
@@ -19,9 +19,9 @@ import "ace-builds/src-min-noconflict/ext-searchbox";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-tomorrow_night_blue";
 
-import pyTester from "../utils";
-import ResultsTable from "./ResultsTable";
+import { pyTester, stdIOWrapper } from "../utils";
 import { runTestsThunk } from "../actions/tests_actions";
+import { saveCodeThunk, updateCodeThunk } from "../actions/user_actions";
 
 const useStyles = makeStyles((theme) => ({
   runButton: {
@@ -40,41 +40,74 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const InteractiveTerminal = ({
+    defaultContent,
+    activeProblem,
+    user
+}) => {
+    const classes = useStyles();
+    const [userCode, setUserCode] = useState("");
+    const [evalResult, setEvalResult] = useState("");
+    const updateUserCode = (value) => {
+        setUserCode(value);
+    };
+    const dispatch = useDispatch();
+    const [testSuit, setTestSuit] = useState();
 
-const InteractiveTerminal = () => {
-  const classes = useStyles();
-  const [userCode, setUserCode] = useState("");
-  const [evalResult, setEvalResult] = useState("");
-  const updateUserCode = (value) => {
-    setUserCode(value);
-  };
-  const dispatch = useDispatch();
-  const  activeProblem = useSelector((state) => state.entities.problems.activeProblem)
-  const [testSuit, setTestSuit] = useState()
 
-  useEffect(() => {
-      if (window.pyodide) {
-          const py = window.pyodide.runPython
-          setTestSuit(new pyTester(activeProblem, py))
-      }
-  }, [window.pyodide, activeProblem])
 
-  function handleClickRunCode() {
-    const py = window.pyodide.runPython;
+    useEffect(() => {
+        if (window.pyodide) {
+            const py = window.pyodide.runPython;
+            setTestSuit(new pyTester(activeProblem, py));
+        }
+        updateUserCode(defaultContent)
+  }, [window.pyodide, activeProblem]);
 
-    const evaluatedCode = py(userCode);
+    function handleClickRunCode() {
+        const py = window.pyodide.runPython;
+        let evaluatedCode;
 
-    setEvalResult(evaluatedCode);
+        try {
+            evaluatedCode = py(stdIOWrapper(userCode));
+        } catch (err) {
+            console.log(err);
+        }
+
+        setEvalResult(evaluatedCode);
+    }
+
+    function handleClickRunTests() {
+        let results;
+        try {
+            results = testSuit.setAndRun(userCode);
+            // const results = testSuit.runTests();
+            dispatch(runTestsThunk(results));
+        } catch(err) {
+            console.log(err)
+        }
   }
 
-  function handleClickRunTests() {
-    testSuit.attempt = userCode;
-    const results = testSuit.runTests();
-    console.log(results);
-    dispatch(runTestsThunk(results));
-  }
+    function handleClickSaveCode() {
+        const userId = user.id;
+        const probId = activeProblem.id;
+        let attemptId, i;
+        if (user.attempts) {
+            for (i = 0; i < user.attempts.length; i++) {
+                if (user.attempts[i].problem_id === probId) {
+                attemptId = user.attempts[i].id;
+                break;
+                }
+            }
+            if (user.attempts[i]) {
+                dispatch(updateCodeThunk(userCode, attemptId));
+                return;
+            }
+        }
+        dispatch(saveCodeThunk(userCode, userId, probId));
+    }
 
-  return (
+    return (
     <>
       <Grid container spacing={3}>
         <Grid item xs={12} md={7}>
@@ -104,9 +137,20 @@ const InteractiveTerminal = () => {
                   <DoneAll style={{ marginLeft: 5 }} />
                 </Button>
               </Grid>
+              <Grid item>
+                <Button
+                  className={classes.testButton}
+                  onClick={handleClickSaveCode}
+                  color='secondary'
+                  variant='contained'>
+                  <Hidden xsDown>{`Save Code`}</Hidden>
+                  <DoneAll style={{ marginLeft: 5 }} />
+                </Button>
+              </Grid>
             </Toolbar>
             <Container disableGutters>
               <AceEditor
+                id='editor'
                 maxLines={Infinity}
                 theme='tomorrow_night_blue'
                 fontSize='100%'
@@ -116,6 +160,7 @@ const InteractiveTerminal = () => {
                 selectionStyle='text'
                 autoScrollEditorIntoView='true'
                 animatedScroll='true'
+                value={userCode}
                 onChange={updateUserCode}
                 width='100%'
                 setOptions={{
@@ -144,4 +189,12 @@ const InteractiveTerminal = () => {
   );
 };
 
-export default InteractiveTerminal;
+const InteractiveTerminalContainer = () => {
+    const defaultContent = useSelector((state) => state.entities.problems.activeProblem.default_content)
+    const activeProblem = useSelector((state) => state.entities.problems.activeProblem);
+    const user = useSelector((state) => state.authentication.user);
+
+    return <InteractiveTerminal defaultContent={defaultContent} activeProblem={activeProblem} user={user} />
+}
+
+export default InteractiveTerminalContainer;
