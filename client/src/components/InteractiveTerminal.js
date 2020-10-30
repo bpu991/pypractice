@@ -22,6 +22,7 @@ import "ace-builds/src-noconflict/theme-tomorrow_night_blue";
 import { pyTester, stdIOWrapper } from "../utils";
 import { runTestsThunk } from "../actions/tests_actions";
 import { saveCodeThunk, updateCodeThunk } from "../actions/user_actions";
+import ResultsTable from './ResultsTable'
 
 const useStyles = makeStyles((theme) => ({
   runButton: {
