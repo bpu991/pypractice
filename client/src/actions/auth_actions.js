@@ -1,5 +1,3 @@
-import { apiUrl } from '../config';
-
 export const SET_USER = 'pypractice/authentication/SET_USER';
 export const REMOVE_USER = 'pypractice/authentication/REMOVE_USER';
 
@@ -17,7 +15,7 @@ export const setUser = user => ({
 
 
 export const login = (email, password) => async dispatch => {
-    const response = await fetch(`${apiUrl}/session`, {
+    const response = await fetch(`/api/session`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -30,7 +28,7 @@ export const login = (email, password) => async dispatch => {
 };
 
 export const logout = () => async (dispatch) => {
-    const response = await fetch(`${apiUrl}/session`, {
+    const response = await fetch(`/api/session`, {
         method: 'delete',
     });
 
@@ -40,7 +38,7 @@ export const logout = () => async (dispatch) => {
 };
 
 export const signup = (username, email, password) => async dispatch => {
-    const response = await fetch(`${apiUrl}/users`, {
+    const response = await fetch(`/api/users`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, email, password }),

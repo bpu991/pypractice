@@ -134,7 +134,7 @@ const InteractiveTerminal = () => {
             </Typography>
           </Card>
           <Card variant='outlined' style={{minHeight:50, marginTop:25}}>
-            <Typography style={{padding:5}}  variant="body1" >Test Results:</Typography>
+            <Typography style={{padding:5}}  variant="body1">Test Results:</Typography>
             <ResultsTable/>
         </Card>
         </Grid>

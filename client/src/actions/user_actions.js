@@ -1,7 +1,6 @@
 import { userConstants } from "../constants/user_constants";
 import { userService } from "../services/user_services";
 import { alertActions } from "./alert_actions";
-import { apiUrl } from "../config";
 
 function login(email, password) {
   return async (dispatch, getState) => {
@@ -39,7 +38,7 @@ const logout = () => async (dispatch, getState) => {
     },
     credentials: "include",
   };
-  const response = await fetch(`${apiUrl}/session/logout`, requestOptions);
+  const response = await fetch(`/api/session/logout`, requestOptions);
   if (response.ok) {
     dispatch(removeUser());
   }

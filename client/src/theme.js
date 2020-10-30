@@ -6,5 +6,12 @@ export const themeObj = {
         primary: {
           main: "#4B8BBE",
         },
-    }
+    },
+    overrides: {
+        MuiButton: {
+          root: {
+            borderRadius: 32,
+          },
+        },
+      },
 }

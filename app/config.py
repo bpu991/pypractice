@@ -8,3 +8,4 @@ class Config:
     SQLALCHEMY_ECHO = True
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
     WTF_CSRF_TIME_LIMIT = None
+    JWT_ACCESS_TOKEN_EXPIRES = False
