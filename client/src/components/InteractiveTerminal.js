@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, getState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import AceEditor from "react-ace";
 import Typography from "@material-ui/core/Typography";
@@ -21,6 +21,7 @@ import "ace-builds/src-noconflict/theme-tomorrow_night_blue";
 
 import { pyTester, stdWrapper, ioInit } from "../utils";
 import { runTestsThunk } from "../actions/tests_actions";
+import { saveCodeThunk, updateCodeThunk } from "../actions/user_actions";
 
 const useStyles = makeStyles((theme) => ({
   runButton: {
@@ -46,30 +47,33 @@ const InteractiveTerminal = () => {
     setUserCode(value);
   };
   const dispatch = useDispatch();
-  const  activeProblem = useSelector((state) => state.entities.problems.activeProblem)
-  const [testSuit, setTestSuit] = useState()
+  const activeProblem = useSelector(
+    (state) => state.entities.problems.activeProblem
+  );
+  const [testSuit, setTestSuit] = useState();
+
+  const user = useSelector((state) => state.authentication.user);
 
   useEffect(() => {
     if (window.pyodide) {
       const py = window.pyodide.runPython;
       ioInit(py);
 
-      var c = window.pyodide.pyimport('_c')
-      c.push('')
+      var c = window.pyodide.pyimport("_c");
+      c.push("");
 
-      setTestSuit(new pyTester(activeProblem, py))
+      setTestSuit(new pyTester(activeProblem, py));
     }
-  }, [window.pyodide])
-
+  }, [window.pyodide]);
 
   function handleClickRunCode() {
     const py = window.pyodide.runPython;
     let evaluatedCode;
 
     try {
-        evaluatedCode = py(stdWrapper(userCode));
-    } catch(err) {
-        console.log(err)
+      evaluatedCode = py(stdWrapper(userCode));
+    } catch (err) {
+      console.log(err);
     }
 
     setEvalResult(evaluatedCode);
@@ -80,6 +84,25 @@ const InteractiveTerminal = () => {
     const results = testSuit.runTests();
     console.log(results);
     dispatch(runTestsThunk(results));
+  }
+
+  function handleClickSaveCode() {
+    const userId = user.id;
+    const probId = activeProblem.id;
+    let attemptId, i;
+    if (user.attempts) {
+      for (i = 0; i < user.attempts.length; i++) {
+        if (user.attempts[i].problem_id === probId) {
+          attemptId = user.attempts[i].id;
+          break;
+        }
+      }
+      if (user.attempts[i]) {
+        dispatch(updateCodeThunk(userCode, attemptId));
+        return;
+      }
+    }
+    dispatch(saveCodeThunk(userCode, userId, probId));
   }
 
   return (
@@ -112,9 +135,20 @@ const InteractiveTerminal = () => {
                   <DoneAll style={{ marginLeft: 5 }} />
                 </Button>
               </Grid>
+              <Grid item>
+                <Button
+                  className={classes.testButton}
+                  onClick={handleClickSaveCode}
+                  color='secondary'
+                  variant='contained'>
+                  <Hidden xsDown>{`Save Code`}</Hidden>
+                  <DoneAll style={{ marginLeft: 5 }} />
+                </Button>
+              </Grid>
             </Toolbar>
             <Container disableGutters>
               <AceEditor
+                id='editor'
                 maxLines={Infinity}
                 theme='tomorrow_night_blue'
                 fontSize='100%'

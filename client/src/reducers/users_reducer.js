@@ -30,6 +30,33 @@ export function users(state = {}, action) {
           return user;
         }),
       };
+    case SAVE_CODE:
+      const probId = action.probId;
+      const attempts = authentication.user.attempts;
+      let attemptId;
+      for (let i = 0; i < attempts.length; i++) {
+        if (authentication.user.attempts[i].problem_id === probId) {
+          attemptId = i;
+          break;
+        }
+      }
+      return {
+        ...state,
+      };
+    case UPDATE_CODE:
+      const probId = action.probId;
+      const attempts = authentication.user.attempts;
+      let attemptId;
+      for (let i = 0; i < attempts.length; i++) {
+        if (authentication.user.attempts[i].problem_id === probId) {
+          attemptId = i;
+          break;
+        }
+      }
+      return {
+        ...state,
+        [authentication.user.attempts[attemptId]]: action.currentAttempt,
+      };
     default:
       return state;
   }
