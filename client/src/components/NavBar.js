@@ -6,18 +6,11 @@ import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { makeStyles } from '@material-ui/core/styles';
 
 import SvgLogo from "./SvgLogo";
 import { userActions } from "../actions/user_actions";
-import { blue } from "@material-ui/core/colors";
-
-const useStyles = makeStyles((theme) => ({
-  colorPrimary: blue
-}));
 
 const NavBar = () => {
-  const classes = useStyles();
   const loggedOut = useSelector((state) => !state.authentication.user);
   const profile = useSelector(state => state.authentication.user);
   const location = useLocation();
@@ -27,9 +20,8 @@ const NavBar = () => {
   const handleSignout = () => {
     dispatch(userActions.logout())
   };
-  
   return (
-    <AppBar className={classes.colorPrimary} color='primary' position={pos} elevation={0}>
+    <AppBar color='transparent' position={pos} elevation={0}>
       <Toolbar>
         <IconButton component={NavLink} to='/'>
           <SvgLogo />
