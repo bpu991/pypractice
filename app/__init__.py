@@ -6,8 +6,8 @@ from flask import Flask, render_template, request, session
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect, generate_csrf
-from flask_jwt_extended import JWTManager
-
+# from flask_jwt_extended import JWTManager
+from flask_login import LoginManager
 
 from app.models import db, User
 from app.api.user_routes import user_routes
@@ -21,16 +21,21 @@ app.logger.addHandler(logging.StreamHandler(sys.stdout))
 
 
 app.config.from_object(Config)
-app.config['JWT_TOKEN_LOCATION'] = ['cookies']
-app.config['JWT_COOKIE_CSRF_PROTECT'] = False
+# app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+# app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(problem_routes, url_prefix='/api/problems')
 app.register_blueprint(session_routes, url_prefix='/api/session')
 db.init_app(app)
 Migrate(app, db)
 
-# create JWT manager
-jwt = JWTManager(app)
+# create login manager
+login_manager = LoginManager(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 
 # Application Security

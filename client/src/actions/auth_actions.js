@@ -1,4 +1,3 @@
-
 export const SET_USER = 'pypractice/authentication/SET_USER';
 export const REMOVE_USER = 'pypractice/authentication/REMOVE_USER';
 

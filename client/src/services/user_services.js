@@ -1,4 +1,3 @@
-
 export const userService = {
   login,
   register,
@@ -20,7 +19,7 @@ async function login(email, password, csrf) {
 
   // const user = await handleResponse(response);
   const user = await response.json();
-  console.log("SERVICES", user);
+  // console.log("SERVICES", user);
 
   return user.current_user || {};
 }

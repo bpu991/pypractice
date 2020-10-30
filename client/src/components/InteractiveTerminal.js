@@ -22,6 +22,7 @@ import "ace-builds/src-noconflict/theme-tomorrow_night_blue";
 import { pyTester, stdIOWrapper } from "../utils";
 import { runTestsThunk } from "../actions/tests_actions";
 import { saveCodeThunk, updateCodeThunk } from "../actions/user_actions";
+import ResultsTable from './ResultsTable'
 
 const useStyles = makeStyles((theme) => ({
   runButton: {
@@ -110,7 +111,7 @@ const InteractiveTerminal = ({
     return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={8} md={8}>
+        <Grid item xs={12} md={7}>
           <Paper variant='outlined'>
             <Toolbar
               style={{ padding: 15 }}
@@ -171,14 +172,19 @@ const InteractiveTerminal = ({
             </Container>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={4}>
-          <Card variant='outlined'>
-            <CardHeader>Output:</CardHeader>
-            <Typography style={{ fontFamily: "monospace", fontSize: "1.5rem" }}>
+        <Grid item xs={12} md={5}>
+          <Card variant='outlined' style={{minHeight:50}}>
+            <Typography style={{padding:5}} gutterBottom variant="body1">Output:</Typography>
+            <Typography style={{ padding:5, fontFamily: "monospace", fontSize: "1.5rem" }}>
               {evalResult}
             </Typography>
           </Card>
+          <Card variant='outlined' style={{minHeight:50, marginTop:25}}>
+            <Typography style={{padding:5}}  variant="body1">Test Results:</Typography>
+            <ResultsTable/>
+        </Card>
         </Grid>
+
       </Grid>
     </>
   );
