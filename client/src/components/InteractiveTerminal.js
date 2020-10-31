@@ -48,15 +48,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InteractiveTerminal = () => {
-    // const defaultContent = useSelector((state) => state.entities.problems.activeProblem.default_content)
+    const defaultContent = useSelector((state) => state.entities.problems.activeProblem.default_content)
     const activeProblem = useSelector((state) => state.entities.problems.activeProblem);
+    const loggedOut = useSelector((state) => !state.authentication.user);
     const user = useSelector((state) => state.authentication.user);
     const classes = useStyles();
     const [userCode, setUserCode] = useState("");
     const [evalResult, setEvalResult] = useState("");
-    const updateUserCode = (value) => {
-        setUserCode(value);
-    };
     const dispatch = useDispatch();
     const [testSuit, setTestSuit] = useState();
 
@@ -68,7 +66,7 @@ const InteractiveTerminal = () => {
             setTestSuit(new pyTester(activeProblem, py));
         }
         if (activeProblem) {
-            setUserCode(activeProblem.defaultContent)
+            setUserCode(defaultContent)
         }
     }, [window.pyodide, activeProblem]);
 
@@ -79,7 +77,8 @@ const InteractiveTerminal = () => {
         try {
             evaluatedCode = py(stdIOWrapper(userCode));
         } catch (err) {
-            // console.log(err);
+            console.log(err);
+            evaluatedCode = "No output"
         }
 
         setEvalResult(evaluatedCode);
@@ -123,6 +122,9 @@ const InteractiveTerminal = () => {
                                     <PlayArrow />
                                 </Button>
                             </Grid>
+                            {(loggedOut) ? (
+                                null
+                            ) : (
                             <Grid item>
                                 <Button
                                     className={classes.saveButton}
@@ -132,6 +134,7 @@ const InteractiveTerminal = () => {
                                     <Save style={{ marginLeft: 5 }} />
                                 </Button>
                             </Grid>
+                            )}
                             <Grid item>
                                 <Button
                                     className={classes.testButton}
@@ -156,7 +159,7 @@ const InteractiveTerminal = () => {
                                 autoScrollEditorIntoView='true'
                                 animatedScroll='true'
                                 value={userCode}
-                                onChange={updateUserCode}
+                                onChange={setUserCode}
                                 width='100%'
                                 setOptions={{
                                     enableBasicAutocompletion: true,
