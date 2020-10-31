@@ -4,14 +4,16 @@ import { userService } from "../services/user_services";
 
 function login(email, password) {
   return async (dispatch, getState) => {
-    dispatch(request({ email }));
     const csrf = getState().csrf.csrfToken;
     try {
-      const current_user = await userService.login(email, password, csrf);
-      dispatch(success(current_user));
+      const resp = await userService.login(email, password, csrf);
+      if (resp.error) {
+        dispatch(failure(resp.error));
+      } else{
+        dispatch(success(resp));
+      }
     } catch (error) {
       dispatch(failure(error.toString()));
-      // dispatch(alertActions.error(error.toString()));
     }
   };
 

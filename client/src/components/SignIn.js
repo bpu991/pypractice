@@ -28,6 +28,7 @@ const SignIn = () => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const err = useSelector(state=>state.errors.auth)
 
     const loggedOut = useSelector(state => !state.authentication.user)
 
@@ -47,6 +48,11 @@ const SignIn = () => {
             <div className={classes.space}>
                 <Typography variant='h5'>Sign in</Typography>
                 <form onSubmit={handleSubmit}>
+                    {(err)?(
+                    <Typography variant="caption" color="error">
+                        {err.errors}
+                    </Typography>
+                    ):(null)}
                     <TextField
                         variant='outlined'
                         margin='normal'
@@ -74,7 +80,7 @@ const SignIn = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <Button
-                        className={classes.className}
+                        className={classes.button}
                         type='submit'
                         fullWidth
                         variant='contained'

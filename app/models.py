@@ -46,7 +46,10 @@ class User(db.Model, UserMixin):
     @classmethod
     def authenticate(cls, email, password):
         user = cls.query.filter(User.email == email).scalar()
-        return check_password_hash(user.hashed_password, password), user
+        if user:
+            return check_password_hash(user.hashed_password, password), user
+        else:
+            return None, None
 
 
 class Attempt(db.Model):

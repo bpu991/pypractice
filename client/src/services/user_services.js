@@ -16,11 +16,13 @@ async function login(email, password, csrf) {
   };
   const response = await fetch(`/api/session/login`, requestOptions);
 
-  // const user = await handleResponse(response);
-  const user = await response.json();
-  // console.log("SERVICES", user);
+  if (response.ok) {
+    const user = await response.json();
+    return user.current_user || {};
+  }
+  const error = await response.json();
+  return {error}
 
-  return user.current_user || {};
 }
 
 async function register(new_user, csrf) {
@@ -36,7 +38,6 @@ async function register(new_user, csrf) {
   const response = await fetch(`/api/session/signup`, requestOptions);
 
   const user = await response.json();
-  console.log("SERVICES", user);
 
   return user.current_user || {};
 }
