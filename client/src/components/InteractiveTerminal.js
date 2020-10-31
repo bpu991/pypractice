@@ -15,7 +15,6 @@ import { green, red, yellow } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/styles";
 import Card from "@material-ui/core/Card";
 
-import "ace-builds/src-min-noconflict/ext-searchbox";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-tomorrow_night_blue";
 
@@ -48,10 +47,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const InteractiveTerminal = ({
-    activeProblem,
-    user
-}) => {
+const InteractiveTerminal = () => {
+    // const defaultContent = useSelector((state) => state.entities.problems.activeProblem.default_content)
+    const activeProblem = useSelector((state) => state.entities.problems.activeProblem);
+    const user = useSelector((state) => state.authentication.user);
     const classes = useStyles();
     const [userCode, setUserCode] = useState("");
     const [evalResult, setEvalResult] = useState("");
@@ -185,12 +184,5 @@ const InteractiveTerminal = ({
     );
 };
 
-const InteractiveTerminalContainer = () => {
-    // const defaultContent = useSelector((state) => state.entities.problems.activeProblem.default_content)
-    const activeProblem = useSelector((state) => state.entities.problems.activeProblem);
-    const user = useSelector((state) => state.authentication.user);
 
-    return <InteractiveTerminal activeProblem={activeProblem} user={user} />
-}
-
-export default InteractiveTerminalContainer;
+export default InteractiveTerminal;
