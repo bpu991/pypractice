@@ -1,3 +1,4 @@
+import { userService } from "../services/user_services";
 // action types
 // put collection of problems into state
 export const LOAD_PROBLEMS = '/pypractice/problems/LOAD_PROBLEMS';
@@ -5,8 +6,7 @@ export const LOAD_PROBLEMS = '/pypractice/problems/LOAD_PROBLEMS';
 // put single problem details into state as active problem
 export const LOAD_PROBLEM_DETAILS = '/pypractice/problems/LOAD_PROBLEM_DETAILS';
 
-
-export const LOAD_TESTS = 'LOAD_TESTS';
+export const SAVE_CODE = '/pypractice/problems/SAVE_CODE';
 
 // action creators
 // put collection of problems into state
@@ -18,6 +18,13 @@ export const loadProblems = (problems) => ({
 export const loadProblem = (problem) => ({
     type: LOAD_PROBLEM_DETAILS,
     activeProblem: problem
+})
+
+
+
+export const saveCode = (attemptData) => ({
+    type: SAVE_CODE,
+    attemptData,
 })
 
 // load all problems
@@ -47,8 +54,12 @@ export const loadProblemDetailsThunk = (problemId) => async dispatch => {
     }
 }
 
+export const saveCodeThunk = (code, userId, probId) => async (
+    dispatch,
+    getState
+) => {
+    const csrf = getState().csrf.csrfToken;
+    const response = await userService.saveCode(code, userId, probId, csrf);
 
-export const getTest = (problemId, code) => async (dispatch, getState) => {
-    //fetch problem tests from backend
-
-}
+    dispatch(saveCode(response));
+};

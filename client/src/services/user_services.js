@@ -2,7 +2,6 @@ export const userService = {
   login,
   register,
   saveCode,
-  updateCode,
 };
 
 async function login(email, password, csrf) {
@@ -17,11 +16,13 @@ async function login(email, password, csrf) {
   };
   const response = await fetch(`/api/session/login`, requestOptions);
 
-  // const user = await handleResponse(response);
-  const user = await response.json();
-  // console.log("SERVICES", user);
+  if (response.ok) {
+    const user = await response.json();
+    return user.current_user || {};
+  }
+  const error = await response.json();
+  return {error}
 
-  return user.current_user || {};
 }
 
 async function register(new_user, csrf) {
@@ -37,7 +38,6 @@ async function register(new_user, csrf) {
   const response = await fetch(`/api/session/signup`, requestOptions);
 
   const user = await response.json();
-  console.log("SERVICES", user);
 
   return user.current_user || {};
 }
@@ -57,27 +57,7 @@ async function saveCode(code, userId, probId, csrf) {
     options
   );
 
-  const updated_code = response.json();
+  const attempts = response.json();
 
-  return updated_code || "";
-}
-
-async function updateCode(code, attemptId, csrf) {
-  const options = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": csrf,
-    },
-    body: JSON.stringify(code),
-  };
-
-  const response = await fetch(
-    `/api/users/attempts/${attemptId}`,
-    options
-  );
-
-  const updated_code = response.json();
-
-  return updated_code || "";
+  return attempts || "";
 }

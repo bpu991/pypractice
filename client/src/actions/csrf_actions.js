@@ -6,15 +6,12 @@ export const restoreCSRF = () => async (dispatch) => {
     method: "GET",
     credentials: "include",
   });
-  console.log(response)
   if (response.ok) {
     const authData = await response.json();
-    console.log(authData)
     if (authData.csrf_token) {
       dispatch(setCSRF(authData.csrf_token));
     }
     if (authData.current_user) {
-      console.log(authData.user, authData)
       //   Change to set current user dispatch call
       dispatch(restore(authData.current_user));
     }

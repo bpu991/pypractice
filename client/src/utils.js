@@ -51,12 +51,10 @@ export function stdIOWrapper(code) {
 import sys, io
 sys.stdout = io.StringIO()
 sys.stdout.__init__()
-
 try:
   ${code}
 except:
   print(sys.exc_info())
-
 sys.stdout.getvalue()
   `
   return code

@@ -46,7 +46,10 @@ class User(db.Model, UserMixin):
     @classmethod
     def authenticate(cls, email, password):
         user = cls.query.filter(User.email == email).scalar()
-        return check_password_hash(user.hashed_password, password), user
+        if user:
+            return check_password_hash(user.hashed_password, password), user
+        else:
+            return None, None
 
 
 class Attempt(db.Model):
@@ -129,7 +132,9 @@ class Problem(db.Model):
                           if user_id == attempt.user_id
                           and attempt.solved]) > 0,
             "attempts": [attempt.to_dict() for attempt in self.attempts
-                         if user_id == attempt.user_id]
+                         if user_id == attempt.user_id],
+            "tests": [test.to_dict() for test in self.tests] if self.tests
+            else None,
         }
 
 

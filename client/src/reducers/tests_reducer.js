@@ -1,15 +1,12 @@
-import { RUN_TESTS } from "../actions/tests_actions";
+import { RUN_TESTS, CLEAR_RESULTS } from "../actions/tests_actions";
 
 export default function testsReducer(state = {}, action) {
   switch (action.type) {
-    case RUN_TESTS: {
-      return {
-        ...state,
-        results: action.results,
-      };
-    }
-    default: {
+    case CLEAR_RESULTS:
+      return {}
+    case RUN_TESTS:
+      return {...state, results: action.results};
+    default:
       return state;
-    }
   }
 }

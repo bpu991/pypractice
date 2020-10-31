@@ -12,71 +12,89 @@ import Link from "@material-ui/core/Link";
 import { userActions } from "../actions/user_actions";
 
 const useStyles = makeStyles((theme) => ({
-  space: {
-    marginTop: 100,
-  },
+    space: {
+        marginTop: 100,
+    },
+    button: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginTop: 15,
+        marginBottom: 15
+    }
 }));
 
 const SignIn = () => {
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const err = useSelector(state=>state.errors.auth)
 
-  const loggedOut = useSelector(state => !state.authentication.user)
+    const loggedOut = useSelector(state => !state.authentication.user)
 
-  if (!loggedOut) {
+    if (!loggedOut) {
+        return (
+            <Redirect to='/' />
+        )
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(userActions.login(email, password));
+    };
+
     return (
-      <Redirect to='/'/>
-    )
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(userActions.login(email, password));
-  };
-
-  return (
-    <Container component='main' maxWidth='xs'>
-      <div className={classes.space}>
-        <Typography variant='h5'>Sign in</Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
-            autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label='Password'
-            type='password'
-            id='password'
-            autoComplete='current-password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button type='submit' fullWidth variant='contained' color='primary' size='large'>
-            Sign In
-          </Button>
-          <Link component={NavLink} to='/signup' variant='body2'>
-            Don't have an account? Sign up
-          </Link>
-        </form>
-      </div>
-    </Container>
-  );
+        <Container component='main' maxWidth='xs'>
+            <div className={classes.space}>
+                <Typography variant='h5'>Sign in</Typography>
+                <form onSubmit={handleSubmit}>
+                    {(err)?(
+                    <Typography variant="caption" color="error">
+                        {err.errors}
+                    </Typography>
+                    ):(null)}
+                    <TextField
+                        variant='outlined'
+                        margin='normal'
+                        required
+                        fullWidth
+                        id='email'
+                        label='Email Address'
+                        name='email'
+                        autoComplete='email'
+                        autoFocus
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField
+                        variant='outlined'
+                        margin='normal'
+                        required
+                        fullWidth
+                        name='password'
+                        label='Password'
+                        type='password'
+                        id='password'
+                        autoComplete='current-password'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <Button
+                        className={classes.button}
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        color='primary'
+                        size='large'>
+                        Sign In
+                    </Button>
+                    <Link component={NavLink} to='/signup' variant='body2'>
+                        Don't have an account? Sign up
+                    </Link>
+                </form>
+            </div>
+        </Container>
+    );
 };
 
 export default SignIn;

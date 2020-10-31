@@ -19,9 +19,8 @@ import UserProfile from "./components/UserProfile";
 import ProblemPage from "./components/ProblemPage";
 import {themeObj} from './theme'
 
-import { AuthRoute } from "./components/AuthRoute";
 import { restoreCSRF } from "./actions/csrf_actions";
-import InteractiveTerminal from "./components/InteractiveTerminal";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,9 +44,9 @@ function App() {
         <div className={classes.root}>
           <NavBar />
           <Switch>
-            <AuthRoute exact path='/signin'>
+            <Route exact path='/signin'>
               <SignIn />
-            </AuthRoute>
+            </Route>
             <Route exact path='/signup'>
               <SignUp />
             </Route>
@@ -56,7 +55,7 @@ function App() {
               <Problems />
             </Route>
 
-            <Route path='/users/:userId'>
+            <Route exact path='/users/:userId'>
               <UserProfile />
             </Route>
 

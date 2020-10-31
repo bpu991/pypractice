@@ -1,18 +1,19 @@
 import { userConstants } from "../constants/user_constants";
 import { userService } from "../services/user_services";
-import { alertActions } from "./alert_actions";
+// import { alertActions } from "./alert_actions";
 
 function login(email, password) {
   return async (dispatch, getState) => {
-    dispatch(request({ email }));
     const csrf = getState().csrf.csrfToken;
     try {
-      const current_user = await userService.login(email, password, csrf);
-      console.log("CURRENT USER", current_user);
-      dispatch(success(current_user));
+      const resp = await userService.login(email, password, csrf);
+      if (resp.error) {
+        dispatch(failure(resp.error));
+      } else{
+        dispatch(success(resp));
+      }
     } catch (error) {
       dispatch(failure(error.toString()));
-      dispatch(alertActions.error(error.toString()));
     }
   };
 
@@ -20,7 +21,6 @@ function login(email, password) {
     return { type: userConstants.LOGIN_REQUEST, user };
   }
   function success(user) {
-    console.log("SUCCESS USE ACTIONS", user);
     return { type: userConstants.LOGIN_SUCCESS, user };
   }
   function failure(error) {
@@ -56,10 +56,10 @@ function register(user) {
       const csrf = getState().csrf.csrfToken;
       const newUser = await userService.register(user, csrf);
       dispatch(success(newUser));
-      dispatch(alertActions.success("Registration successful"));
+      // dispatch(alertActions.success("Registration successful"));
     } catch (error) {
       dispatch(failure(error.toString()));
-      dispatch(alertActions.error(error.toString()));
+      // dispatch(alertActions.error(error.toString()));
     }
   };
 
@@ -74,19 +74,8 @@ function register(user) {
   }
 }
 
-export const saveCodeThunk = (code, userId, probId) => async (
-  dispatch,
-  getState
-) => {
-  const csrf = getState().csrf.csrfToken;
-  const currentAttempt = await userService.saveCode(code, userId, probId, csrf);
 
-  dispatch(actionSaveCode(), currentAttempt);
-};
 
-function actionSaveCode() {
-  return { type: userConstants.SAVE_CODE };
-}
 
 export const updateCodeThunk = (code, attemptId) => async (
   dispatch,
@@ -106,6 +95,5 @@ export const userActions = {
   login,
   logout,
   register,
-  saveCodeThunk,
   updateCodeThunk,
 };
