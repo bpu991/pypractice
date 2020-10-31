@@ -65,7 +65,12 @@ const InteractiveTerminal = () => {
             const py = window.pyodide.runPython;
             setTestSuit(new pyTester(activeProblem, py));
         }
-        if (activeProblem) {
+        if (activeProblem.attempts) {
+            if (activeProblem.attempts.length) {
+                const newUserAttempt = activeProblem.attempts[activeProblem.attempts.length - 1].saved_code
+                setUserCode(newUserAttempt)
+                return
+            }
             setUserCode(defaultContent)
         }
     }, [window.pyodide, activeProblem]);
@@ -88,18 +93,24 @@ const InteractiveTerminal = () => {
         let results;
         try {
             results = testSuit.setAndRun(userCode);
-            console.log(results)
+            if (results &&
+                results.reduce((acc, res) => acc && res.pass) &&
+                !loggedOut) {
+                const userId = user.id;
+                const probId = activeProblem.id;
+                dispatch(saveCodeThunk(userCode, userId, probId, true));
+            }
             dispatch(runTests(results));
         } catch (err) {
             console.log(err)
-            console.log(testSuit)
         }
     }
 
     function handleClickSaveCode() {
         const userId = user.id;
         const probId = activeProblem.id;
-        dispatch(saveCodeThunk(userCode, userId, probId));
+        const solved = activeProblem.solved
+        dispatch(saveCodeThunk(userCode, userId, probId, solved));
     }
 
     return (
@@ -125,16 +136,16 @@ const InteractiveTerminal = () => {
                             {(loggedOut) ? (
                                 null
                             ) : (
-                            <Grid item>
-                                <Button
-                                    className={classes.saveButton}
-                                    onClick={handleClickSaveCode}
-                                    variant='contained'>
-                                    <Hidden xsDown>{`Save Code`}</Hidden>
-                                    <Save style={{ marginLeft: 5 }} />
-                                </Button>
-                            </Grid>
-                            )}
+                                    <Grid item>
+                                        <Button
+                                            className={classes.saveButton}
+                                            onClick={handleClickSaveCode}
+                                            variant='contained'>
+                                            <Hidden xsDown>{`Save Code`}</Hidden>
+                                            <Save style={{ marginLeft: 5 }} />
+                                        </Button>
+                                    </Grid>
+                                )}
                             <Grid item>
                                 <Button
                                     className={classes.testButton}

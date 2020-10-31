@@ -22,9 +22,9 @@ export const loadProblem = (problem) => ({
 
 
 
-export const saveCode = (attempts) => ({
+export const saveCode = (attemptData) => ({
     type: SAVE_CODE,
-    attempts,
+    attemptData,
 })
 
 // load all problems
@@ -61,5 +61,5 @@ export const saveCodeThunk = (code, userId, probId) => async (
     const csrf = getState().csrf.csrfToken;
     const response = await userService.saveCode(code, userId, probId, csrf);
 
-    dispatch(saveCode(response.attempts));
+    dispatch(saveCode(response));
 };

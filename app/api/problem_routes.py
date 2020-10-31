@@ -8,11 +8,10 @@ problem_routes = Blueprint('problems', __name__)
 
 
 # Route for getting (only) id, title, & difficulty of all problems
-@problem_routes.route('/')
+@problem_routes.route('')
 def index():
-    user = current_user if current_user.is_authenticated else None
-    if user:
-        user_id = user.id
+    user_id = current_user.id if current_user.is_authenticated else None
+    if user_id:
         problems = Problem.query.all()
         return {"problems": {problem.id:
                              problem.dict_with_user_attempts(user_id)
@@ -31,6 +30,7 @@ def index():
 
 @problem_routes.route('/<problem_param>')  # Route for getting a single problem
 def get_single_problem(problem_param):
+    user_id = current_user.id if current_user.is_authenticated else None
     problem_id = int(problem_param)
     response = Problem.query.get(problem_id)
-    return response.full_with_user_attempts(None)
+    return response.full_with_user_attempts(user_id)

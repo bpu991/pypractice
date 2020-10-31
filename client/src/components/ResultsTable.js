@@ -10,15 +10,22 @@ import TableRow from "@material-ui/core/TableRow";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 
+import {clearResults} from "../actions/tests_actions"
+
 export default function ResultsTable() {
   const results = useSelector((state) => state.entities.results.results);
+  const activeProblem = useSelector((state) => state.entities.problems.activeProblem)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearResults())
+  }, [activeProblem.id])
+
   if (!results) return null;
 
   return (
     <>
-      <TableContainer
-        // style={{ border: "3px solid limegreen", maxWidth: "500px" }}
-        >
+      <TableContainer>
         <Table size="small">
           <TableHead>
             <TableRow>

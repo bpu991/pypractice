@@ -6,7 +6,6 @@ export const restoreCSRF = () => async (dispatch) => {
     method: "GET",
     credentials: "include",
   });
-  console.log(response)
   if (response.ok) {
     const authData = await response.json();
     if (authData.csrf_token) {

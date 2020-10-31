@@ -8,9 +8,13 @@ import ListItem from "@material-ui/core/ListItem";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
+import Grid from "@material-ui/core/Grid"
 import NavigateNext from "@material-ui/icons/NavigateNext";
 import NavigateBefore from "@material-ui/icons/NavigateBefore";
 import IconButton from "@material-ui/core/IconButton";
+import CheckCircle from "@material-ui/icons/CheckCircle";
+import { green } from "@material-ui/core/colors";
+
 
 import {
     loadProblemsThunk,
@@ -76,9 +80,16 @@ const ProblemPage = () => {
             </Toolbar>
             <Container maxWidth='md'>
                 <div>
-                    <Typography variant='h6' paragraph>
+                    <Grid container alignItems="center">
+                    <Typography component="span" variant='h6'>
                         {activeProblem.title}
                     </Typography>
+                    {activeProblem.solved ? (
+                      <CheckCircle style={{ color: green[300], marginLeft:10 }} />
+                    ) : (
+                      null
+                    )}
+                    </Grid>
                     <Typography variant='subtitle1' gutterBottom paragraph>
                         {difficulties[activeProblem.difficulty]}
                     </Typography>

@@ -4,12 +4,6 @@ from app.models import db, User, Attempt
 user_routes = Blueprint('users', __name__)
 
 
-@user_routes.route('/')  # Route for getting all the users in the db
-def index():
-    response = User.query.all()
-    return {"users": [user.to_dict() for user in response]}
-
-
 @user_routes.route('/<user_param>')
 def get_single_user(user_param):
     user_id = int(user_param)
@@ -47,13 +41,16 @@ def post_attempt(user_param, problem_param):
     data = request.json
 
     attempt = Attempt(user_id=user_id, problem_id=problem_id,
-                      saved_code=data, solved=True)
+                      saved_code=data, solved=False)
 
     db.session.add(attempt)
     db.session.commit()
-    attempts = Attempt.query.filter(user_id == Attempt.user_id).all()
+    attempts = Attempt.query.filter_by(user_id=user_id,
+                                       problem_id=problem_id).all()
 
-    return {"attempts": [attempt.to_dict() for attempt in attempts]}
+    return {"attempts": [attempt.to_dict() for attempt in attempts],
+            "attempted": True,
+            "solved": True in (attempt.solved for attempt in attempts)}
 
 
 # Route for updating a problem attempt to the db

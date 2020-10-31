@@ -7,7 +7,7 @@ export default function reducer(state = { byId: {}, activeProblem: {} }, action)
         case LOAD_PROBLEM_DETAILS:
             return { ...state, activeProblem: action.activeProblem }
         case SAVE_CODE:
-            return { ...state, activeProblem: { ...state.activeProblem, attempts: action.attempts } }
+            return { ...state, activeProblem: { ...state.activeProblem, ...action.attemptData } }
         default:
             return state;
     }

@@ -15,14 +15,9 @@ export class pyTester {
   }
 
   runTests() {
-    // console.log(this.args);
+    console.log(this.args);
     if (this.attempt === "" || this.args.length === 0) {
-      return this.args.map(test=>({
-        call: test.call,
-        expected: test.expected,
-        result: "None",
-        pass: false,
-      }));
+      return;
     }
     let results = [];
     for (let i = 0; i < this.args.length; i++) {
@@ -33,7 +28,7 @@ result
             `);
       attempt =
         typeof attempt === "boolean" ? (attempt ? "True" : "False") : attempt;
-      // console.log(attempt);
+      console.log(attempt);
       results.push({
         call: this.args[i].call,
         expected: this.args[i].expected,
@@ -56,12 +51,10 @@ export function stdIOWrapper(code) {
 import sys, io
 sys.stdout = io.StringIO()
 sys.stdout.__init__()
-
 try:
   ${code}
 except:
   print(sys.exc_info())
-
 sys.stdout.getvalue()
   `
   return code
