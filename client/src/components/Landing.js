@@ -117,10 +117,11 @@ const LandingPage = () => {
               Why Python?
             </Typography>
             <Typography variant='h6' paragraph gutterBottom>
-              Python is blah blah blah Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Leo vel orci porta non pulvinar neque
-              laoreet.
+              Python is a modern programming language with powerful features
+              and clean syntax. It's used for everything from building novel
+              artificial intelligences and powering advanced data architecture,
+              to simplifying administrative tasks and tinkering with widgets. It's
+              beloved by experienced developers and laypeople alike.
             </Typography>
           </Grid>
           <Grid item sm={5}>
@@ -141,9 +142,10 @@ const LandingPage = () => {
             </Typography>
             <Typography variant='h6' paragraph gutterBottom>
               Start with the basics, and work your way through increasingly
-              complex problems.... consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Leo vel orci
-              porta non pulvinar neque laoreet.
+              complex problems as you learn the fundamentals of Python programming.
+              Soon you'll be ready to use Python for your goals and projects. Make
+              something brand new—or just make your existing tasks a little easier.
+              Isn't it time you gave Python a try?
             </Typography>
           </Grid>
           <Grid item sm={5} className={classes.imageContainer}>
