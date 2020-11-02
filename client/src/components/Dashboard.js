@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+import UsersProblems from './UsersProblems'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
@@ -23,6 +25,7 @@ const Dashboard = () => {
             <div className={classes.root}>
                 <Button component={NavLink} to='/problems' variant="contained">Start Coding!</Button>
             </div>
+            <UsersProblems/>
         </div>
     )
 }
