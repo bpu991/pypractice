@@ -54,12 +54,12 @@ export const loadProblemDetailsThunk = (problemId) => async dispatch => {
     }
 }
 
-export const saveCodeThunk = (code, userId, probId) => async (
+export const saveCodeThunk = (code, userId, probId, solved) => async (
     dispatch,
     getState
 ) => {
     const csrf = getState().csrf.csrfToken;
-    const response = await userService.saveCode(code, userId, probId, csrf);
+    const response = await userService.saveCode(code, userId, probId, solved, csrf);
 
     dispatch(saveCode(response));
 };

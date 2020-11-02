@@ -39,9 +39,10 @@ def post_attempt(user_param, problem_param):
     problem_id = int(problem_param)
 
     data = request.json
+    print(data)
 
     attempt = Attempt(user_id=user_id, problem_id=problem_id,
-                      saved_code=data, solved=False)
+                      saved_code=data['code'], solved=data['solved'])
 
     db.session.add(attempt)
     db.session.commit()
