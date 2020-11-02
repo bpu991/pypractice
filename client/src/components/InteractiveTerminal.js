@@ -69,11 +69,11 @@ const InteractiveTerminal = () => {
             if (activeProblem.attempts.length) {
                 const newUserAttempt = activeProblem.attempts[activeProblem.attempts.length - 1].saved_code
                 setUserCode(newUserAttempt);
-                // setEvalResult("");
+                setEvalResult("");
                 return;
             }
             setUserCode(defaultContent);
-            // setEvalResult("");
+            setEvalResult("");
         }
     }, [window.pyodide, activeProblem]);
 

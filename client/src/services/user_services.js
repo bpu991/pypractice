@@ -42,14 +42,14 @@ async function register(new_user, csrf) {
   return user.current_user || {};
 }
 
-async function saveCode(code, userId, probId, csrf) {
+async function saveCode(code, userId, probId, solved, csrf) {
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-CSRFToken": csrf,
     },
-    body: JSON.stringify(code),
+    body: JSON.stringify({code, solved}),
   };
 
   const response = await fetch(
