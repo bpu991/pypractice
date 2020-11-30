@@ -5,18 +5,18 @@ import { profilePage } from '../actions/profile_actions';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import FirstAchievement from './achievements/solved/FirstAchievement'
-import SecondAchievement from './achievements/solved/SecondAchievement'
-import ThirdAchievement from './achievements/solved/ThirdAchievement'
-import FourthAchievement from './achievements/solved/FourthAchievement'
-import FifthAchievement from './achievements/solved/FifthAchievement'
-import SixthAchievement from './achievements/solved/SixthAchievement'
-import SeventhAchievement from './achievements/solved/SeventhAchievement'
-import EighthAchievement from './achievements/solved/EighthAchievement'
-import NinthAchievement from './achievements/solved/NinthAchievement'
-import TenthAchievement from './achievements/solved/TenthAchievement'
-import EleventhAchievement from './achievements/solved/EleventhAchievement'
-import TwelfthAchievement from './achievements/solved/TwelfthAchievement'
+import FirstAchievement from './achievements/solved/FirstAchievement';
+import SecondAchievement from './achievements/solved/SecondAchievement';
+import ThirdAchievement from './achievements/solved/ThirdAchievement';
+import FourthAchievement from './achievements/solved/FourthAchievement';
+import FifthAchievement from './achievements/solved/FifthAchievement';
+import SixthAchievement from './achievements/solved/SixthAchievement';
+import SeventhAchievement from './achievements/solved/SeventhAchievement';
+import EighthAchievement from './achievements/solved/EighthAchievement';
+import NinthAchievement from './achievements/solved/NinthAchievement';
+import TenthAchievement from './achievements/solved/TenthAchievement';
+import EleventhAchievement from './achievements/solved/EleventhAchievement';
+import TwelfthAchievement from './achievements/solved/TwelfthAchievement';
 import FirstAttemptedAchievement from './achievements/attempted/FirstAttemptedAchievement';
 import SecondAttemptedAchievement from './achievements/attempted/SecondAttemptedAchievement';
 import ThirdAttemptedAchievement from './achievements/attempted/ThirdAttemptedAchievement';
@@ -62,35 +62,35 @@ const UserProfile = () => {
             setSolved([<FirstAchievement />])
         }
 
-        if (solved_problems >= 2) {
+        if (solved_problems >=2) {
             setSolved(prevState => [...prevState, <SecondAchievement />])
         }
 
-        if (solved_problems >= 3) {
+        if (solved_problems >=3) {
             setSolved(prevState => [...prevState, <ThirdAchievement />])
         }
 
-        if (solved_problems >= 4) {
+        if (solved_problems >=4) {
             setSolved(prevState => [...prevState, <FourthAchievement />])
         }
 
-        if (solved_problems >= 5) {
+        if (solved_problems >=5) {
             setSolved(prevState => [...prevState, <FifthAchievement />])
         }
 
-        if (solved_problems >= 6) {
+        if (solved_problems >=6) {
             setSolved(prevState => [...prevState, <SixthAchievement />])
         }
 
-        if (solved_problems >= 7) {
+        if (solved_problems >=7) {
             setSolved(prevState => [...prevState, <SeventhAchievement />])
         }
 
-        if (solved_problems >= 8) {
+        if (solved_problems >=8) {
             setSolved(prevState => [...prevState, <EighthAchievement />])
         }
 
-        if (solved_problems >= 9) {
+        if (solved_problems >=9) {
             setSolved(prevState => [...prevState, <NinthAchievement />])
         }
 
@@ -125,7 +125,7 @@ const UserProfile = () => {
     useEffect(() => {
         const { attempted_problems } = profile
 
-        if (attempted_problems >= 1) {
+        if (attempted_problems >=1) {
             setAttempted([<FirstAttemptedAchievement />])
         }
 

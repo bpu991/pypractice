@@ -16,9 +16,9 @@ with app.app_context():
     javier = User(username='Javier', email='javier@aa.io', password='password')
     dean = User(username='Dean', email='dean@aa.io', password='password')
     angela = User(username='Angela', email='angela@aa.io', password='password')
-    soonmi = User(username='Soon-Mi', email='soonmi@aa.io',
-                  password='password')
+    soonmi = User(username='Soon-Mi', email='soonmi@aa.io', password='password')
     alissa = User(username='Alissa', email='alissa@aa.io', password='password')
+    demo = User(username='Demo', email='demo@example.com', password='password')
 
 
     # Problems
@@ -154,6 +154,11 @@ with app.app_context():
     attempt1 = Attempt(user=ian, problem=problem_sleepin, saved_code='def sleep_in(wd, vac):\n  return (not wd) or vac', solved=True)
     attempt2 = Attempt(user=javier, problem=problem_sleepin, saved_code='def sleep_in(x, y):\n  return x or y', solved=False)
     attempt3 = Attempt(user=ian, problem=problem_sleepin, saved_code='def sleep_in(n):\n  pass', solved=False)
+    attempt4 = Attempt(user=demo, problem=problem_sleepin, saved_code='def sleep_in(n):\n  pass', solved=True)
+    attempt5 = Attempt(user=demo, problem=problem_bunnyearsredux, saved_code='def sleep_in(n):\n  pass', solved=True)
+    attempt6 = Attempt(user=demo, problem=problem_fibonacci, saved_code='def sleep_in(n):\n  pass', solved=True)
+    attempt7 = Attempt(user=demo, problem=problem_factorial, saved_code='def sleep_in(n):\n  pass', solved=True)
+    attempt8 = Attempt(user=demo, problem=problem_bigdiff, saved_code='def sleep_in(n):\n  pass', solved=True)
 
     db.session.add(ian)
     db.session.add(javier)
@@ -161,6 +166,7 @@ with app.app_context():
     db.session.add(angela)
     db.session.add(soonmi)
     db.session.add(alissa)
+    db.session.add(demo)
 
     db.session.add(problem_sleepin)
     db.session.add(problem_sum13)
@@ -174,5 +180,11 @@ with app.app_context():
     db.session.add(problem_countevens)
     db.session.add(problem_centeredaverage)
     db.session.add(problem_bigdiff)
+
+    db.session.add(attempt4)
+    db.session.add(attempt5)
+    db.session.add(attempt6)
+    db.session.add(attempt7)
+    db.session.add(attempt8)
 
     db.session.commit()
