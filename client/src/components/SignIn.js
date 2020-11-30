@@ -28,6 +28,8 @@ const SignIn = () => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [demoEmail, setDemoEmail] = useState("demo@example.com")
+    const [demoPassword, setDemoPassword] = useState("password")
     const err = useSelector(state=>state.errors.auth)
 
     const loggedOut = useSelector(state => !state.authentication.user)
@@ -43,6 +45,10 @@ const SignIn = () => {
         dispatch(userActions.login(email, password));
     };
 
+    const handleDemoLogin = (e) => {
+        e.preventDefault();
+        dispatch(userActions.login(demoEmail, demoPassword));
+    };
     return (
         <Container component='main' maxWidth='xs'>
             <div className={classes.space}>
@@ -88,10 +94,22 @@ const SignIn = () => {
                         size='large'>
                         Sign In
                     </Button>
-                    <Link component={NavLink} to='/signup' variant='body2'>
-                        Don't have an account? Sign up
-                    </Link>
+                    
                 </form>
+                <form onSubmit={handleDemoLogin}>
+                    <Button
+                        className={classes.button}
+                        type='submit'
+                        fullWidth
+                        variant='contained'
+                        color='primary'
+                        size='large'>
+                        Demo Login
+                    </Button>
+                </form>
+                <Link component={NavLink} to='/signup' variant='body2'>
+                        Don't have an account? Sign up
+                </Link>
             </div>
         </Container>
     );

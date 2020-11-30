@@ -23,7 +23,7 @@ export default function NinthAttemptedAchievement() {
             <Grid container elevation={3}>
                 <Grid component={Paper} item style={{ padding: 10, display: 'flex', alignContent: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                     <img className={classes.img} src={ninthAward}></img>
-                    <Typography variant="h5">You've made 35 attempts!</Typography>
+                    <Typography variant="h5">You've made 40 attempts!</Typography>
                 </Grid>
             </Grid>
         </Container>
