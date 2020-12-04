@@ -17,6 +17,27 @@ function Copyright() {
   );
 }
 
+function Contributors() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      Contributors:  
+      {' '}
+      <Link color="inherit" href="https://github.com/jshafto">
+        Juliet Shafto,
+      </Link> {' '}
+      <Link color="inherit" href="https://bpu991.github.io./">
+        Benjamin Pu,
+      </Link> {' '}
+      <Link color="inherit" href="https://github.com/traversar">
+        Andrew Travers,
+      </Link> {' '}
+      <Link color="inherit" href="https://jonyalmeida.herokuapp.com">
+        Jony Almeida
+      </Link>
+    </Typography>
+  )
+}
+
 const useStyles = makeStyles((theme) => ({
   footer: {
     padding: theme.spacing(3, 2),
@@ -32,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
         <Container maxWidth="sm">
           {/* <Typography variant="body1" align="center">My sticky footer can be found here.</Typography> */}
           <Copyright />
+          <Contributors />
         </Container>
       </footer>
   );
